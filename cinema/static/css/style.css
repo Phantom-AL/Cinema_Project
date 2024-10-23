@@ -1,4 +1,101 @@
-p {
-    color: red;
 
+.header-logo {
+    width: 90px; /* Измени значение на подходящее */
+    height: auto; /* Автоматическая высота для сохранения пропорций */
+}
+
+.login-button, .register-button {
+    color: #e1e1e1;
+    text-decoration: none;
+    border-radius: 50px;
+    padding: 8px 20px;
+    background-color: #cba815;
+
+}
+
+.login-button:hover {
+    background-color: #b09313;
+}
+
+.register-button {
+    background-color: #3C3C3C;
+}
+
+.register-button:hover {
+    background-color: #555555;
+}
+
+@media (max-width: 768px) {
+    .header-logo {
+        width: 80px;
+    }
+}
+
+
+@media (max-width: 500px) {
+    .header-logo {
+        width: 70px;
+    }
+}
+
+
+@media (max-width: 500px) {
+    .navbar-toggler-icon {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 768px) {
+    .login-button, .register-button {
+        padding: 10px 16px;
+        width: 100%;
+        font-size: 0.9rem;
+    }
+}
+
+@media (max-width: 500px) {
+    .login-button, .register-button {
+        padding: 6px 10px; /* ещё больше уменьшим внутренние отступы */
+        font-size: 0.85rem; /* ещё немного уменьшим текст */
+    }
+}
+
+
+
+.nav-link {
+    font-weight: 500;
+    color: #d1d1d1;
+    font-size: 1.1rem;
+    position: relative;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+@media (min-width: 768px) {
+    .nav-link::after {
+        content: '';
+        position: absolute;
+        width: 0;
+        height: 2px;
+        background-color: #cba815; /* цвет подчеркивания */
+        left: 50%;
+        bottom: -5px;
+        transition: width 0.3s ease, left 0.3s ease;
+    }
+
+    .nav-link:hover::after {
+        width: 100%; /* полная длина линии */
+        left: 0; /* линия начинает заполнять от середины */
+    }
+}
+
+
+.nav-link:hover {
+    color: #cba815; /* цвет текста при наведении */
+}
+
+
+.navbar-toggler:focus, .btn-close:focus {
+    box-shadow: none;
+    outline: none;
 }
