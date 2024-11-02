@@ -1,15 +1,47 @@
+/* Настройка кнопок и лого */
 
-.header-logo {
-    width: 90px; /* Измени значение на подходящее */
+.header-logo, .footer-logo {
+    width: 100px; /* Измени значение на подходящее */
     height: auto; /* Автоматическая высота для сохранения пропорций */
 }
+
+
+.fa-x-twitter, .fa-instagram, .fa-telegram {
+    font-size: 36px;
+}
+
+
+.fa-telegram {
+    color: #0088cc; /* Голубой цвет для Telegram */
+}
+
+.fa-instagram {
+    color: #e1306c; /* Розово-фиолетовый цвет для Instagram */
+}
+
+.fa-x-twitter {
+    color: #e1e1e1; /* Синий цвет для X (Twitter) */
+}
+
+/* Дополнительно можно добавить hover-эффект */
+.fa-brands:hover {
+    opacity: 0.8; /* Эффект затемнения при наведении */
+}
+
+.footer-text {
+    color: #e1e1e1;
+    font-size: 1.2rem;
+    margin-bottom: 0;
+}
+
 
 .login-button, .register-button {
     color: #e1e1e1;
     text-decoration: none;
     border-radius: 50px;
-    padding: 8px 20px;
+    padding: 12px 24px;
     background-color: #cba815;
+    font-size: 1.1rem;
 
 }
 
@@ -25,21 +57,35 @@
     background-color: #555555;
 }
 
+
+
+
+
 @media (max-width: 768px) {
-    .header-logo {
+    .header-logo, .footer-logo {
         width: 80px;
     }
-}
-
-
-@media (max-width: 500px) {
-    .header-logo {
-        width: 70px;
+    .fa-x-twitter, .fa-instagram, .fa-telegram {
+        font-size: 32px;
     }
 }
 
 
-@media (max-width: 500px) {
+@media (max-width: 535px) {
+    .fa-x-twitter, .fa-instagram, .fa-telegram {
+        font-size: 28px;
+    }
+}
+
+
+@media (max-width: 535px) {
+    .header-logo, .footer-logo {
+        width: 65px;
+    }
+}
+
+
+@media (max-width: 535px) {
     .navbar-toggler-icon {
         font-size: 1rem;
     }
@@ -53,25 +99,35 @@
     }
 }
 
-@media (max-width: 500px) {
+@media (max-width: 535px) {
     .login-button, .register-button {
-        padding: 6px 10px; /* ещё больше уменьшим внутренние отступы */
-        font-size: 0.85rem; /* ещё немного уменьшим текст */
+        padding: 8px 12px; /* ещё больше уменьшим внутренние отступы */
+        font-size: 0.70rem; /* ещё немного уменьшим текст */
     }
 }
 
+
+/* Ссылки в шапке */
 
 
 .nav-link {
     font-weight: 500;
     color: #d1d1d1;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     position: relative;
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
-@media (min-width: 768px) {
+.nav-link .active {
+    color: #e1e1e1; !important;
+}
+
+.nav-link:hover {
+    color: #cba815; /* цвет текста при наведении */
+}
+
+@media (min-width: 992px) {
     .nav-link::after {
         content: '';
         position: absolute;
@@ -83,19 +139,602 @@
         transition: width 0.3s ease, left 0.3s ease;
     }
 
-    .nav-link:hover::after {
-        width: 100%; /* полная длина линии */
-        left: 0; /* линия начинает заполнять от середины */
+    .nav-link:hover::after,
+    .nav-link:focus::after {
+        width: 100%;
+        left: 0;
     }
+
+    /* Подчеркивание для активной по умолчанию ссылки */
+    .nav-link.active::after {
+        width: 100%;
+        left: 0;
+    }
+
 }
 
 
-.nav-link:hover {
-    color: #cba815; /* цвет текста при наведении */
-}
+
 
 
 .navbar-toggler:focus, .btn-close:focus {
     box-shadow: none;
     outline: none;
+}
+
+
+/* Работа с изображением и текстом на нем*/
+
+
+.breaking-bad_section {
+    position: relative;
+}
+
+.breaking-bad_section img {
+    object-fit: cover;
+    width: 100%;
+
+}
+
+/* Работа с текстом */
+
+.image-text {
+    position: absolute; /* Абсолютное позиционирование текста */
+    top: 10%;
+    left: 58%;
+    color: #d1d1d1;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Тень для улучшения читаемости */
+    max-width: 100%;
+}
+
+.image-text h1 {
+    font-size: 1.84rem;
+    margin-bottom: 15px;
+}
+
+.my_swiper h2 {
+    font-size: 1.84rem;
+}
+
+.image-text p {
+    font-size: 1.2rem;
+}
+
+
+.reviews h2 {
+    text-align: center;
+    font-size: 1.84rem;
+    color: #e1e1e1;
+}
+
+
+.last-reviews {
+    text-align: center;
+    font-size: 1.6rem;
+    color: #e1e1e1;
+}
+
+
+/* Адаптация текста */
+
+
+@media (max-width: 900px) {
+    .image-text {
+        left: 55%; /* Смещаем текст влево */
+        top: 10%; /* Опускаем текст ниже */
+    }
+
+    .image-text h1, .my_swiper h2 {
+        font-size: 1.3rem;
+        margin-bottom: 10px;
+    }
+
+    .reviews h2 {
+        font-size: 1.3rem;
+    }
+
+    .reviews .last-reviews {
+        font-size: 1.3rem;
+    }
+
+    .image-text p, .footer-text {
+        font-size: 1rem;
+        margin-bottom: 8px;
+    }
+}
+
+@media (max-width: 656px) {
+    .image-text {
+        left: 52%;
+        top: 5%; /* Опускаем текст ниже */
+    }
+
+    .image-text h1, .my_swiper h2 {
+        font-size: 1.1rem;
+        margin-bottom: 6px;
+    }
+
+    .reviews h2 {
+        font-size: 1.1rem;
+    }
+
+    .reviews .last-reviews {
+        font-size: 1.1rem;
+    }
+
+    .image-text p {
+        font-size: 0.9rem;
+        margin-bottom: 4px;
+    }
+
+    .footer-text {
+        font-size: 0.9rem;
+    }
+
+}
+
+@media (max-width: 535px) {
+    .image-text {
+        max-width: 90%;
+        left: 52%;
+        top: 3%;
+    }
+
+    .image-text h1, .my_swiper h2 {
+        font-size: 0.8rem;
+        margin-bottom: 4px;
+    }
+
+    .reviews h2 {
+        font-size: 0.8rem;
+    }
+
+    .reviews .last-reviews {
+        font-size: 0.8rem;
+    }
+
+    .image-text p {
+        font-size: 0.6rem;
+        margin: 2px;
+    }
+
+    .footer-text {
+        font-size: 0.7rem;
+    }
+
+}
+
+
+/*Swiper customize*/
+
+
+.swiper-pagination-lock {
+    display: flex !important; /* или block, если нужно другое поведение */
+    visibility: visible !important;
+}
+
+
+.swiper {
+    width: calc(100% - 80px); /* 100% ширина минус отступы */
+
+
+}
+
+.my_swiper {
+    background-color: #212529;
+    padding-bottom: 4vw;
+
+}
+
+.my_swiper h2 {
+    color: #d1d1d1;
+    padding-top: 2.86vw;
+}
+
+.my-swiper-wrapper {
+    padding-top: 2.6vw;
+
+}
+
+.reviews .swiper-wrapper, .reviews {
+    padding-top: 2.6vw;
+}
+
+.swiper-pagination {
+    position: relative !important;
+    margin-top: 10px !important;
+
+}
+
+.swiper-pagination-bullet.swiper-pagination-bullet-active {
+    background-color: #fff3cd;
+}
+
+@media (max-width: 475px) {
+    .swiper-pagination .swiper-pagination-bullet,
+    .swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {
+        width: 6px;
+        height: 6px;
+    }
+}
+
+
+.image-slider img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+
+/* Стрелки */
+
+.swiper-button-next::after,
+.swiper-button-prev::after {
+    color: #fff3cd;
+
+}
+
+
+@media (max-width: 699px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: none !important;
+    }
+}
+
+/* Отображаем стрелки на экранах 600px и больше */
+@media (min-width: 700px) {
+    .swiper-button-next,
+    .swiper-button-prev {
+        display: block !important;
+    }
+}
+
+.col-4 {
+    align-self: center;
+}
+
+
+/* reviews секция */
+
+.reviews {
+    height: auto; /* Позволяем контейнеру автоматически увеличиваться по высоте */
+    padding-bottom: 5vw;
+
+    background: radial-gradient(circle, rgba(203, 174, 64, 1) 0%, rgba(35, 35, 35, 1) 100%);
+}
+
+
+/* Cards */
+
+
+.card-text {
+    font-size: 1rem;
+    color: white;
+
+
+}
+
+.card-title {
+    font-size: 1.2rem;
+    color: #ffc107; /* Золотой цвет для выделения */
+}
+
+.card-button {
+    text-decoration: none;
+    color: #0dcaf0;
+}
+
+.card-button:hover {
+    color: #0aa2c0;
+}
+
+@media (min-width: 700px) {
+    /* Обычные карточки с эффектом затемнения */
+    /* Настройки для слайдов Swiper */
+    .my_swiper .swiper-slide {
+        position: relative;
+        overflow: hidden;
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+
+    .my_swiper .swiper-slide::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0);
+        transition: background-color 0.4s ease;
+        z-index: 1;
+    }
+
+    .my_swiper .swiper-slide:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        border: 2px solid #b09313;
+        border-radius: 10px;
+    }
+
+    .my_swiper .swiper-slide:hover::before {
+        background-color: rgba(0, 0, 0, 0.2);
+    }
+
+    .card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    .card {
+        transition: transform 0.4s ease, box-shadow 0.4s ease;
+    }
+}
+
+
+/* Добавление анимации */
+
+
+
+
+@media (min-width: 1150px) {
+
+    .card-title {
+        font-size: 1.3rem;
+    }
+
+    .card-button {
+        font-size: 1.1rem;
+    }
+
+    .card-text {
+        font-size: 1.1rem;
+    }
+}
+
+@media (min-width: 1350px) {
+
+    .card-title {
+        font-size: 1.5rem;
+    }
+
+    .card-button {
+        font-size: 1.3rem;
+    }
+
+    .card-text {
+        font-size: 1.3rem;
+    }
+}
+
+@media (min-width: 1650px) {
+
+    .card-title {
+        font-size: 1.7rem;
+    }
+
+    .card-button {
+        font-size: 1.5rem;
+    }
+
+    .card-text {
+        font-size: 1.5rem;
+    }
+    .swiper-pagination .swiper-pagination-bullet,
+    .swiper-pagination .swiper-pagination-bullet.swiper-pagination-bullet-active {
+        width: 11px;
+        height: 11px;
+    }
+}
+
+
+
+
+
+
+@media (max-width: 850px) {
+
+    .card-title {
+        font-size: 0.9rem;
+    }
+
+    .card-button {
+        font-size: 0.8rem;
+    }
+
+    .card-text {
+        font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 535px) {
+    .card-title {
+        font-size: 0.8rem;
+    }
+
+    .card-button {
+        font-size: 0.7rem;
+    }
+
+    .card-text {
+        font-size: 0.7rem;
+
+    }
+
+    .card-body, .card-text, .card-body p, .card-body a {
+        padding: 2px;
+    }
+
+
+}
+
+@media (max-width: 410px) {
+    .card-title {
+        font-size: 0.7rem;
+        margin-bottom: 2px;
+    }
+
+    .card-button {
+        font-size: 0.6rem;
+    }
+
+    .card-text {
+        font-size: 0.6rem;
+
+    }
+}
+
+
+.card {
+    background: linear-gradient(135deg, #232323, #2a2a2a);
+    border: 1px solid #444;
+
+
+}
+
+
+.card-text {
+    color: #e1e1e1;
+    padding: 0;
+    margin: 0;
+    max-height: 60px;
+    overflow: hidden; /* Скрываем выходящий за границы текст */
+    text-overflow: ellipsis; /* Добавляем многоточие */
+    white-space: nowrap; /* Однострочный текст */
+}
+
+
+/* modal */
+
+.modal-content {
+    background-color: #232323;
+}
+
+.modal-title, .modal-body {
+    color: #e1e1e1;
+}
+
+button.btn-close {
+    background-color: transparent; /* Убирает фоновый цвет */
+    border: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23e1e1e1' class='bi bi-x' viewBox='0 0 16 16'%3E%3Cpath d='M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 1em;
+    height: 1em;
+    opacity: 1;
+    font-size: 42px;
+}
+
+.modal-footer .btn {
+    color: #e1e1e1;
+    background-color: #3C3C3C;
+    border: 0;
+}
+
+
+.modal-footer .btn:hover {
+    background-color: #555555;
+}
+
+
+/* width 1150 */
+
+@media (min-width: 1150px) {
+    .header-logo, .footer-logo {
+        width: 120px; /* Измени значение на подходящее */
+        height: auto; /* Автоматическая высота для сохранения пропорций */
+    }
+
+    .fa-x-twitter, .fa-instagram, .fa-telegram {
+        font-size: 44px;
+    }
+    .footer-text {
+        font-size: 1.4rem;
+    }
+    .login-button, .register-button {
+        font-size: 1.3rem;
+        padding: 14px 26px;
+    }
+    .nav-link {
+        font-size: 1.4rem;
+    }
+    .image-text h1, .my_swiper h2, .reviews h2 {
+        font-size: 2rem;
+    }
+    .image-text p {
+        font-size: 1.5rem;
+    }
+    .last-reviews {
+        font-size: 1.8rem;
+    }
+
+}
+
+
+/* width 1400px */
+
+@media (min-width: 1350px) {
+    .header-logo, .footer-logo {
+        width: 150px; /* Измени значение на подходящее */
+        height: auto; /* Автоматическая высота для сохранения пропорций */
+    }
+
+    .fa-x-twitter, .fa-instagram, .fa-telegram {
+        font-size: 53px;
+    }
+    .footer-text {
+        font-size: 1.6rem;
+    }
+    .login-button, .register-button {
+        font-size: 1.6rem;
+        padding: 16px 28px;
+    }
+    .nav-link {
+        font-size: 1.7rem;
+    }
+    .image-text h1, .my_swiper h2, .reviews h2 {
+        font-size: 2.3rem;
+    }
+    .image-text p {
+        font-size: 1.8rem;
+    }
+    .last-reviews {
+        font-size: 1.9rem;
+    }
+
+}
+
+
+
+/* width 1700px */
+
+@media (min-width: 1650px) {
+    .header-logo, .footer-logo {
+        width: 180px; /* Измени значение на подходящее */
+        height: auto; /* Автоматическая высота для сохранения пропорций */
+    }
+
+    .fa-x-twitter, .fa-instagram, .fa-telegram {
+        font-size: 55px;
+    }
+    .footer-text {
+        font-size: 1.8rem;
+    }
+    .login-button, .register-button {
+        font-size: 1.9rem;
+        padding: 18px 30px;
+    }
+    .nav-link {
+        font-size: 2rem;
+    }
+    .image-text h1, .my_swiper h2, .reviews h2 {
+        font-size: 2.7rem;
+    }
+    .image-text p {
+        font-size: 2.1rem;
+    }
+    .last-reviews {
+        font-size: 2.1rem;
+    }
+
 }
