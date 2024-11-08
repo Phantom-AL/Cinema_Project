@@ -1,0 +1,38 @@
+{% extends 'registration/base_auth.html' %}
+
+
+{% block title %} Авторизация {% endblock %}
+
+{% block content %}
+    <div class="form-container">
+        <h2>Авторизация</h2>
+        <form method="post">
+            {% csrf_token %}
+
+            <div class="auth-username">
+                <input type="text" name="{{ form.username.name }}" placeholder="Введите имя пользователя" required>
+            </div>
+
+            <div class="auth-password">
+                <input type="password" name="{{ form.password.name }}" placeholder="Введите пароль" required>
+            </div>
+
+            <a href="{% url 'password_reset' %}" class="forgot-password">Забыли пароль?</a>
+
+            {% if form.errors %}
+                <p class="error-login">Вы ввели неверное имя пользователя или пароль.</p>
+            {% endif %}
+
+            <button class="btn">Войти</button>
+
+            <div class="form-check form-switch">
+                <input class="form-check-input" type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                <label class="form-check-label" for="flexSwitchCheckChecked">Запомнить меня</label>
+            </div>
+
+        </form>
+    </div>
+{% endblock %}
+
+
+

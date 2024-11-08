@@ -1,0 +1,222 @@
+body {
+    background-image: url('../img/auth_background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.form-container {
+    background-color: #232323;
+    text-align: center;
+    width: 35%;
+    border-radius: 30px;
+
+
+}
+
+.form-container-done {
+    padding: 0 20px;
+}
+
+
+.form-container h2{
+    color: #cba815;
+}
+
+.auth-username, .auth-password, .auth-email, .btn, .forgot-password {
+    margin-bottom: 0.7rem;
+
+}
+
+.form-check {
+    margin-bottom: 1.2rem;
+}
+
+
+.existing-account {
+    margin-bottom: 1.2rem;
+    margin-top: 0.6rem;
+}
+
+.auth-username input, .auth-password input, .auth-email input {
+    background-color: inherit;
+    border-radius: 20px;
+    width: 80%;
+    padding: 10px 20px;
+    border: 1px solid #e1e1e1;
+    color: #e1e1e1;
+    font-size: 1rem;
+
+}
+
+.auth-username input:focus, .auth-password input:focus, .auth-email input:focus {
+    -webkit-box-shadow: 0px 0px 15px 5px rgba(176, 147, 19, 0.7);
+    -moz-box-shadow: 0px 0px 15px 5px rgba(176, 147, 19, 0.7);
+    box-shadow: 0px 0px 15px 5px rgba(176, 147, 19, 0.7);
+
+}
+
+.forgot-password, .existing-account {
+    display: block;
+    text-decoration: none;
+    color: #d1d1d1;
+    transition: color 0.3s ease;
+}
+
+.forgot-password:hover, .existing-account:hover {
+    color: #b0b0b0;
+}
+
+
+
+
+.btn {
+    margin-top: 0.6rem;
+    color: #fff;
+    background-color: #cba815;
+    border-radius: 20px;
+    text-decoration: none;
+    padding: 12px 0;
+    width: 92%;
+    border: 1px solid #cba815;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.btn:hover {
+    background-color: #8a7610;
+    color: #e1e1e1;
+
+}
+
+
+
+
+.error-login {
+    color: red;
+    margin: 10px 0;
+}
+
+.form-error p{
+    color: #ff3737;
+    padding: 0 15px;
+}
+
+/* Стили для переключателя в стиле формы */
+
+.form-check-label {
+    color: #e1e1e1;
+    margin-left: 2px;
+}
+
+
+.form-check-input {
+    accent-color: #f0c400;
+    width: 15px;
+    height: 15px;
+
+}
+
+.form-check {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+/* Адаптация под моб устройства */
+
+@media (max-width: 768px) {
+    .btn {
+        width: 68%;
+        margin-top: 0.4rem;
+        border-radius: 20px;
+        padding: 8px 0;
+        font-size: 0.8rem;
+    }
+    .form-text {
+        font-size: 0.8rem;
+    }
+    .auth-username input, .auth-password input, .auth-email input {
+        width: 68%;
+        padding: 6px 8px;
+
+        font-size: 0.7rem;
+    }
+    .auth-username, .auth-password, .auth-email {
+        margin-bottom: 0.5rem;
+    }
+    .form-check-input {
+        width: 12px;
+        height: 12px;
+
+    }
+    .forgot-password, .existing-account {
+        font-size: 0.7rem;
+        margin-bottom: 0.4rem;
+    }
+    .form-container h2 {
+        font-size: 1rem;
+    }
+    .form-check-label {
+        font-size: 0.7rem;
+    }
+}
+
+
+@media (max-width: 530px) {
+    .btn {
+        width: 65%;
+        margin-top: 0.3rem;
+        border-radius: 20px;
+        padding: 6px 0;
+        font-size: 0.5rem;
+    }
+    .form-text {
+        font-size: 0.6rem;
+    }
+
+    .auth-username input, .auth-password input, .auth-email input {
+        width: 60%;
+        padding: 5px 6px;
+
+        font-size: 0.4rem;
+
+    }
+    .auth-username, .auth-password, .auth-email {
+        margin-bottom: 0.4rem;
+    }
+    .form-check-input {
+        width: 10px;
+        height: 10px;
+
+    }
+    .forgot-password, .existing-account {
+        font-size: 0.5rem;
+        margin-bottom: 0.2rem;
+    }
+    .form-container h2 {
+        font-size: 0.8rem;
+        margin-bottom: 0.4rem;
+    }
+    .form-check-label {
+        font-size: 0.5rem;
+    }
+}
+
+.form-text {
+    color: #e1e1e1;
+}
+
+.form-container-done a {
+    display: block;
+    margin: 0.6rem auto;
+}
+
