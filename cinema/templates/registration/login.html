@@ -1,11 +1,16 @@
 {% extends 'registration/base_auth.html' %}
+{% load static %}
 
 
 {% block title %} Авторизация {% endblock %}
 
 {% block content %}
     <div class="form-container">
-        <h2>Авторизация</h2>
+
+        <div class="header-content">
+            <a href="{% url 'index' %}" class="back-link"><img class="icon" src="{% static 'img/icons8-back-30.png' %}" alt="icon"></a>
+            <h2>Авторизация</h2>
+        </div>
         <form method="post">
             {% csrf_token %}
 

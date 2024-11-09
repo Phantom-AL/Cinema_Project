@@ -31,18 +31,18 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a class="nav-link active mx-md-2" href="{% url 'index' %}" onclick="setActiveLink(this)">Главная</a>
+                            <a class="nav-link {% if request.path == '/' %}active{% endif %} mx-md-2" href="{% url 'index' %}" onclick="setActiveLink(this)">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-md-2" href="{% url 'movies' %}"
+                            <a class="nav-link {% if request.path == '/movies/' %}active{% endif %} mx-md-2"  href="{% url 'movies' %}"
                                onclick="setActiveLink(this)">Фильмы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-md-2" href="{% url 'serials' %}"
+                            <a class="nav-link {% if request.path == '/serials/' %}active{% endif %} mx-md-2" href="{% url 'serials' %}"
                                onclick="setActiveLink(this)">Сериалы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link mx-md-2" href="{% url 'genre' %}" onclick="setActiveLink(this)">Жанры</a>
+                            <a class="nav-link {% if request.path == '/genre/' %}active{% endif %} mx-md-2" href="{% url 'genre' %}" onclick="setActiveLink(this)">Жанры</a>
                         </li>
                     </ul>
                 </div>
