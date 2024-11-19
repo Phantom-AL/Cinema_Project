@@ -7,5 +7,451 @@
 
 
 {% block content %}
-	<h1>Это страница фильмов!!!</h1>
+
+
+    <div class="container ">
+        <div class="movies-container ">
+            <h1 class="mb-4">Фильмы</h1>
+
+        </div>
+
+        <div class="row mb-4">
+            <div class="my-card col" data-id="apocalypse">
+                <img src="{% static 'img/apocalypse.jpg' %}" class="card-img-top" alt="Apocalypse">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 7.5
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Апокалипсис</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2015</p>
+                        <p class="muted-text">Фантастика</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/gentlemen.jpg' %}" class="card-img-top" alt="Gentlemen">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 8.1
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Джентльмены</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2019</p>
+                        <p class="muted-text">Криминал</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/mr_robot.jpg' %}" class="card-img-top" alt="Mr. Robot">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 10
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Мистер Робот</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2015</p>
+                        <p class="muted-text">Триллер</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/breaking_bad.jpg' %}" class="card-img-top" alt="Breaking Bad">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 10
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Во все тяжкие</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2008</p>
+                        <p class="muted-text">Драма</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/walking_dead.jpg' %}" class="card-img-top" alt="The Walking Dead">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 9.3
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Ходячие мертвецы</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2010</p>
+                        <p class="muted-text">Ужасы</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mb-4">
+            <div class="my-card col">
+                <img src="{% static 'img/game_of_thrones.jpg' %}" class="card-img-top" alt="Game of Thrones">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 10
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Игра престолов</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2011</p>
+                        <p class="muted-text">Фэнтези</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/troy.jpg' %}" class="card-img-top" alt="Troy">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 10
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Троя</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2004</p>
+                        <p class="muted-text">Исторический</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/terrifier.jpg' %}" class="card-img-top" alt="Terrifier">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 7.5
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Террифаер</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2016</p>
+                        <p class="muted-text">Ужасы</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/stranger_thing.jpg' %}" class="card-img-top" alt="Stranger Things">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 8.4
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Очень странные дела</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2016</p>
+                        <p class="muted-text">Фантастика</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/revenant.jpg' %}" class="card-img-top" alt="The Revenant">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 9.3
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Выживший</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2015</p>
+                        <p class="muted-text">Приключения</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="my-card col">
+                <img src="{% static 'img/joker.jpg' %}" class="card-img-top" alt="Joker">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 8
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Джокер</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2019</p>
+                        <p class="muted-text">Драма</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/peaky_blinders.jpg' %}" class="card-img-top" alt="Peaky Blinders">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 9.5
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Острые козырьки</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2013</p>
+                        <p class="muted-text">Криминал</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/apocalypse.jpg' %}" class="card-img-top" alt="Apocalypse">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 7
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Апокалипсис</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2015</p>
+                        <p class="muted-text">Фантастика</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/troy.jpg' %}" class="card-img-top" alt="Troy">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 10
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Троя</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2004</p>
+                        <p class="muted-text">Исторический</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/walking_dead.jpg' %}" class="card-img-top" alt="The Walking Dead">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 9
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Ходячие мертвецы</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2010</p>
+                        <p class="muted-text">Ужасы</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mb-4">
+            <div class="my-card col">
+                <img src="{% static 'img/apocalypse.jpg' %}" class="card-img-top" alt="Apocalypse">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 7.5
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Апокалипсис</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2015</p>
+                        <p class="muted-text">Фантастика</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/gentlemen.jpg' %}" class="card-img-top" alt="Gentlemen">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 8.1
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Джентльмены</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2019</p>
+                        <p class="muted-text">Криминал</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/mr_robot.jpg' %}" class="card-img-top" alt="Mr. Robot">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 10
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Мистер Робот</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2015</p>
+                        <p class="muted-text">Триллер</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/breaking_bad.jpg' %}" class="card-img-top" alt="Breaking Bad">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 10
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Во все тяжкие</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2008</p>
+                        <p class="muted-text">Драма</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/walking_dead.jpg' %}" class="card-img-top" alt="The Walking Dead">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 9.3
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Ходячие мертвецы</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2010</p>
+                        <p class="muted-text">Ужасы</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row mb-4">
+            <div class="my-card col">
+                <img src="{% static 'img/game_of_thrones.jpg' %}" class="card-img-top" alt="Game of Thrones">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 10
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Игра престолов</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2011</p>
+                        <p class="muted-text">Фэнтези</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/troy.jpg' %}" class="card-img-top" alt="Troy">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 10
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Троя</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2004</p>
+                        <p class="muted-text">Исторический</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/terrifier.jpg' %}" class="card-img-top" alt="Terrifier">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 7.5
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Террифаер</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2016</p>
+                        <p class="muted-text">Ужасы</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/stranger_thing.jpg' %}" class="card-img-top" alt="Stranger Things">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 8.4
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Очень странные дела</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2016</p>
+                        <p class="muted-text">Фантастика</p>
+                    </div>
+                </div>
+            </div>
+            <div class="my-card col">
+                <img src="{% static 'img/revenant.jpg' %}" class="card-img-top" alt="The Revenant">
+                <div class="rating">
+                    <i class="fa-solid fa-star"></i> 9.3
+                </div>
+                <div class="bookmark" onclick="toggleBookmark(this)">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <div class="card-info">
+                    <h5>Выживший</h5>
+                    <div class="year-genre">
+                        <p class="muted-text">2015</p>
+                        <p class="muted-text">Приключения</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <nav aria-label="Страницы фильмов">
+        <ul class="pagination pagination-md justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" aria-label="Предыдущая">
+                    <i class="fa fa-chevron-left"></i> <!-- Стрелка влево -->
+                </a>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">1</a></li>
+            <li class="page-item active" aria-current="page">
+                <span class="page-link">2</span>
+            </li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item"><a class="page-link" href="#">4</a></li>
+            <li class="page-item"><a class="page-link" href="#">5</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#" aria-label="Следующая">
+                    <i class="fa fa-chevron-right"></i> <!-- Стрелка вправо -->
+                </a>
+            </li>
+        </ul>
+    </nav>
+
 {% endblock %}
