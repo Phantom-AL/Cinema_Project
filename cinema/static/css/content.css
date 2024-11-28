@@ -162,6 +162,14 @@ body {
 .muted-text {
     color: #b0b0b0; /* Более светлый цвет для меньшего акцента */
 }
+.year-genre .muted-text-genre {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+    color: #b0b0b0;
+}
+
 
 
 /* pagination */
@@ -227,4 +235,11 @@ body {
 
 .pagination .page-item {
     margin: 0.3rem; /* Увеличенные промежутки между элементами */
+}
+
+@media (min-width: 992px) {
+    .custom-lg-col {
+        flex: 0 0 20%; /* 1/5 ширины */
+        max-width: 20%; /* Ограничение ширины до 20% */
+    }
 }

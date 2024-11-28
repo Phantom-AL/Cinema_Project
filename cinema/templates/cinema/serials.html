@@ -1,9 +1,118 @@
-{% extends 'cinema/base.html'%}
+{% extends 'cinema/base.html' %}
 
 {% load static %}
 
+
 {% block title %} Сериалы {% endblock %}
 
+
 {% block content %}
-	<h1>Это страница сериалов!!!</h1>
+
+
+    <div class="container ">
+        <div class="movies-container ">
+            <h1 class="mb-4">Сериалы</h1>
+
+        </div>
+
+        <div class="row mb-4">
+            {% for movie in movies %}
+                <div class="p-0 col-4 col-md-3 custom-lg-col mb-4">
+                    <div class="my-card " data-id="apocalypse">
+                        <img src="{{ movie.poster_path }}" class="card-img-top" alt="Apocalypse">
+                        <div class="rating">
+                            <i class="fa-solid fa-star"></i> {{ movie.vote_average }}
+                        </div>
+                        <div class="bookmark" onclick="toggleBookmark(this)">
+                            <i class="fa-regular fa-bookmark"></i>
+                        </div>
+                        <div class="card-info">
+                            <h5>{{ movie.title }}</h5>
+                            <div class="year-genre">
+                                <p class="muted-text">{{ movie.release_date|date:"Y" }}</p>
+                                <p class="muted-text-genre">{% for genre in movie.genre.all %}
+                                    {{ genre.name }}{% if not forloop.last %}, {% endif %}
+                                {% endfor %}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <nav aria-label="Страницы Сериалов">
+            <ul class="pagination pagination-md justify-content-center">
+                <!-- Кнопка для предыдущей страницы -->
+                {% if page.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page.previous_page_number }}" aria-label="Предыдущая">
+                            <i class="fa fa-chevron-left"></i>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" aria-label="Предыдущая">
+                            <i class="fa fa-chevron-left"></i>
+                        </a>
+                    </li>
+                {% endif %}
+
+                <!-- Первая страница -->
+                {% if page.number > 3 %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page=1">1</a>
+                    </li>
+                {% endif %}
+                {% if page.number > 4 %}
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                {% endif %}
+
+                <!-- Диапазон страниц вокруг текущей -->
+                {% for num in page.paginator.page_range %}
+                    {% if num > page.number|add:'-3' and num < page.number|add:'3' %}
+                        {% if num == page.number %}
+                            <li class="page-item active" aria-current="page">
+                                <span class="page-link">{{ num }}</span>
+                            </li>
+                        {% else %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ num }}">{{ num }}</a>
+                            </li>
+                        {% endif %}
+                    {% endif %}
+                {% endfor %}
+
+                <!-- Последние страницы -->
+                {% if page.number < page.paginator.num_pages|add:'-3' %}
+                    <li class="page-item disabled">
+                        <span class="page-link">...</span>
+                    </li>
+                {% endif %}
+                {% if page.number < page.paginator.num_pages|add:'-2' %}
+                    <li class="page-item">
+                        <a class="page-link"
+                           href="?page={{ page.paginator.num_pages }}">{{ page.paginator.num_pages }}</a>
+                    </li>
+                {% endif %}
+
+                <!-- Кнопка для следующей страницы -->
+                {% if page.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?page={{ page.next_page_number }}" aria-label="Следующая">
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <a class="page-link" aria-label="Следующая">
+                            <i class="fa fa-chevron-right"></i>
+                        </a>
+                    </li>
+                {% endif %}
+            </ul>
+        </nav>
+
+    </div>
 {% endblock %}

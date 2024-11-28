@@ -6,6 +6,3 @@ class CinemaConfig(AppConfig):
     name = 'cinema'
 
 
-API = 'd239c80e608ddd0ae053c97ce74d419e'
-
-
