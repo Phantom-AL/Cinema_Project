@@ -93,260 +93,43 @@
         <div class="reviews-swiper swiper">
             <div class="swiper-wrapper">
                 <!-- Slides -->
-
-                <div class="swiper-slide">
+                
+                {% for review in reviews %}
+                <div class="swiper-slide reviews-swiper-slide">
                     <div class="card">
                         <div class="row g-0">
                             <div class="col-4">
-                                <img src="{% static 'img/apocalypse.jpg' %}" class="img-fluid rounded-start"
+                                <img src="{{ review.poster }}" class="img-fluid rounded-start"
                                      alt="...">
                             </div>
                             <div class="col-8">
                                 <div class="card-body text-center">
-                                    <h5 class="card-title">Елена Д.</h5>
-                                    <p class="card-text">8/10</p>
-                                    <p class="card-text">"Очень приятно удивлена, смотрите смело. Такое чувство, что
-                                        хочется пересматривать и пересматривать этот шедевр"</p>
+                                    <h5 class="card-title">{{ review.user }}</h5>
+                                    <p class="card-text"><i class="fa-solid fa-star"></i> {{ review.rating }}</p>
+                                    <p class="card-text">{{ review.comment }}</p>
                                     <a href="#" class="card-button" data-bs-toggle="modal"
                                        data-bs-target="#exampleModal"
-                                       data-bs-whatever="Очень приятно удивлена, смотрите смело. Такое чувство, что хочется пересматривать и пересматривать этот шедевр"
+                                       data-bs-whatever="{{ review.comment }}"
                                        data-bs-name="Елена Д.">Показать больше</a>
-                                    <p class="card-text"><small>8 октября 2024</small></p>
+                                    <p class="card-text"><small>{{ review.date_publish }}</small></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="swiper-slide">
-                    <div class="card">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="{% static 'img/breaking_bad.jpg' %}" class="img-fluid rounded-start"
-                                     alt="...">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Алексей Г.</h5>
-                                    <p class="card-text">10/10</p>
-                                    <p class="card-text">"Просто великолепно, рекомендую всем!"</p>
-                                    <a href="#" class="card-button" data-bs-toggle="modal"
-                                       data-bs-target="#exampleModal"
-                                       data-bs-whatever="Просто великолепно, рекомендую всем!"
-                                       data-bs-name="Алексей Г.">Показать больше</a>
-                                    <p class="card-text"><small>10 октября 2024</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="card">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="{% static 'img/mr_robot.jpg' %}" class="img-fluid rounded-start"
-                                     alt="...">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Светлана Б.</h5>
-                                    <p class="card-text">9/10</p>
-                                    <p class="card-text">"Сериал захватывающий, один из лучших!"</p>
-                                    <a href="#" class="card-button" data-bs-toggle="modal"
-                                       data-bs-target="#exampleModal"
-                                       data-bs-whatever="Сериал захватывающий, один из лучших!"
-                                       data-bs-name="Светлана Б.">Показать больше</a>
-                                    <p class="card-text"><small>12 октября 2024</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="card">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="{% static 'img/walking_dead.jpg' %}" class="img-fluid rounded-start"
-                                     alt="...">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Николай Т.</h5>
-                                    <p class="card-text">8/10</p>
-                                    <p class="card-text">"Хороший сериал, но второй раз не буду смотреть."</p>
-                                    <a href="#" class="card-button" data-bs-toggle="modal"
-                                       data-bs-target="#exampleModal"
-                                       data-bs-whatever="Хороший сериал, но второй раз не буду смотреть."
-                                       data-bs-name="Николай Т.">Показать больше</a>
-                                    <p class="card-text"><small>14 октября 2024</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="card">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="{% static 'img/gentlemen.jpg' %}" class="img-fluid rounded-start"
-                                     alt="...">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Максим Н.</h5>
-                                    <p class="card-text">5/10</p>
-                                    <p class="card-text">"Средний фильм, один раз можно посмотреть."</p>
-                                    <a href="#" class="card-button" data-bs-toggle="modal"
-                                       data-bs-target="#exampleModal"
-                                       data-bs-whatever="Средний фильм, один раз можно посмотреть."
-                                       data-bs-name="Максим Н.">Показать больше</a>
-                                    <p class="card-text"><small>15 октября 2024</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="card">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="{% static 'img/terrifier.jpg' %}" class="img-fluid rounded-start"
-                                     alt="...">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title">Екатерина М.</h5>
-                                    <p class="card-text">6/10</p>
-                                    <p class="card-text">"Ожидала большего, но не разочарована."</p>
-                                    <a href="#" class="card-button" data-bs-toggle="modal"
-                                       data-bs-target="#exampleModal"
-                                       data-bs-whatever="Ожидала большего, но не разочарована."
-                                       data-bs-name="Екатерина М.">Показать больше</a>
-                                    <p class="card-text"><small>18 октября 2024</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="card">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="{% static 'img/joker.jpg' %}" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title ">Ольга К.</h5>
-                                    <p class="card-text ">9/10</p>
-                                    <p class="card-text">"Смотрела на одном дыхании, рекомендую!"</p>
-                                    <a href="#" class="card-button" data-bs-toggle="modal"
-                                       data-bs-target="#exampleModal"
-                                       data-bs-whatever="Смотрела на одном дыхании, рекомендую!"
-                                       data-bs-name="Ольга К.">Показать больше</a>
-                                    <p class="card-text "><small>20 октября 2024</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="card">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="{% static 'img/game_of_thrones.jpg' %}" class="img-fluid rounded-start"
-                                     alt="...">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title ">Дмитрий Л.</h5>
-                                    <p class="card-text ">10/10</p>
-                                    <p class="card-text">"Лучший сериал года для меня!"</p>
-                                    <a href="#" class="card-button" data-bs-toggle="modal"
-                                       data-bs-target="#exampleModal"
-                                       data-bs-whatever="Лучший сериал года для меня!"
-                                       data-bs-name="Дмитрий Л.">Показать больше</a>
-                                    <p class="card-text "><small>19 октября 2024</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="card">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="{% static 'img/troy.jpg' %}" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title ">Анна П.</h5>
-                                    <p class="card-text ">8/10</p>
-                                    <p class="card-text">"Отличный сюжет и актёрская игра на высоте!"</p>
-                                    <a href="#" class="card-button" data-bs-toggle="modal"
-                                       data-bs-target="#exampleModal"
-                                       data-bs-whatever="Отличный сюжет и актёрская игра на высоте!"
-                                       data-bs-name="Анна П.">Показать больше</a>
-                                    <p class="card-text "><small>24 октября 2024</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="card">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="{% static 'img/revenant.jpg' %}" class="img-fluid rounded-start"
-                                     alt="...">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title ">Иван С.</h5>
-                                    <p class="card-text ">7/10</p>
-                                    <p class="card-text">"Неплохо, но концовка оставила вопросы."</p>
-                                    <a href="#" class="card-button" data-bs-toggle="modal"
-                                       data-bs-target="#exampleModal"
-                                       data-bs-whatever="Неплохо, но концовка оставила вопросы."
-                                       data-bs-name="Иван С.">Показать больше</a>
-                                    <p class="card-text "><small>22 октября 2024</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="swiper-slide">
-                    <div class="card">
-                        <div class="row g-0">
-                            <div class="col-4">
-                                <img src="{% static 'img/stranger_thing.jpg' %}" class="img-fluid rounded-start"
-                                     alt="...">
-                            </div>
-                            <div class="col-8">
-                                <div class="card-body text-center">
-                                    <h5 class="card-title ">Анна П.</h5>
-                                    <p class="card-text ">9/10</p>
-                                    <p class="card-text ">
-                                        "Сериал просто отличный! Очень понравился"
-                                    </p>
-                                    <a href="#" class="card-button" data-bs-toggle="modal"
-                                       data-bs-target="#exampleModal"
-                                       data-bs-whatever="Сериал просто отличный! Очень понравился"
-                                       data-bs-name="Анна П.">Показать
-                                        больше</a>
-                                    <p class="card-text "><small>24 октября 2024</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                
+                {% endfor %}
+                
             </div>
+            <!-- If we need navigation buttons -->
+        <div class="swiper-button-prev"></div>
+        <div class="swiper-button-next"></div>
         </div>
 
         <!-- If we need pagination -->
         <div class="swiper-pagination"></div>
 
-        <!-- If we need navigation buttons -->
-        <div class="swiper-button-prev"></div>
-        <div class="swiper-button-next"></div>
+        
 
 
     </section>

@@ -10,6 +10,7 @@ urlpatterns = [
     path('movies/', movies, name='movies'),
     path('serials/', serials, name='serials'),
     path('genre/', genre, name='genre'),
+    path('cartoon/', cartoon, name='cartoon'),
     path('accounts/signup/', signup, name='signup'),
     path('accounts/login/', CustomLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),

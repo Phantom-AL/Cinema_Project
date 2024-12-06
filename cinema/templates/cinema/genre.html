@@ -1,7 +1,29 @@
 {% extends 'cinema/base.html' %}
-
+{% load static %}
 {% block title %} Жанры {% endblock %}
 
 {% block content %}
-	<h1>Страница жанров</h1>
+    <div class="container mt-5 container-genres">
+        <h1 class="text-white mb-4">Жанры</h1>
+        <div class="row row-cols-1 row-cols-md-4 row-cols-lg-5 g-4">
+            {% for item in genres_data %}
+                {% if item.media|length >= 3 %}  <!-- Проверка, что в жанре есть хотя бы 3 постера -->
+                    <div class="col">
+                        <div class="my-genre rounded-3 shadow-sm h-100">
+                            <div class="card-body-genre position-relative p-4">
+                                <h5 class="card-title text-center">{{ item.genre.name }}</h5>
+                                <div class="my-genres position-relative mt-3" style="height: 170px;">
+                                    {% for media_item in item.media %}
+                                        <img src="{{ media_item.poster_path }}"
+                                             alt="{{ media_item.title }}"
+                                             class="poster-image position-absolute image-{{ forloop.counter }}">
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
 {% endblock %}

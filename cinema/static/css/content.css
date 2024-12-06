@@ -149,7 +149,9 @@ body {
     justify-content: center;
 
 }
-
+.card-text .fa-star {
+    color: #FFD700;
+}
 .my-card .rating i {
     margin-right: 5px; /* Задаем отступ справа от звездочки */
 }
@@ -243,3 +245,5 @@ body {
         max-width: 20%; /* Ограничение ширины до 20% */
     }
 }
+
+

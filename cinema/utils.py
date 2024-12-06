@@ -1,7 +1,7 @@
 import requests
 
 from film_base import settings
-from .models import Genres
+from .models import Genres, Cartoon
 
 API_KEY = settings.API_KEY
 BASE_URL = 'https://api.themoviedb.org/3'
@@ -45,7 +45,7 @@ def fetch_and_save_media(media_model, page_start=1, page_end=3, is_tv_show=False
 
         # Параметры для запросов
         params_ru = {'api_key': API_KEY,
-                     "language": "ru-RU", 
+                     "language": "ru-RU",
                      "page": i,
                      "vote_count.gte": 1500,
                      "without_genres": "16"
@@ -108,4 +108,69 @@ def fetch_and_save_media(media_model, page_start=1, page_end=3, is_tv_show=False
                     count += 1
         else:
             print(f"Ошибка API: RU-{response_ru.status_code}, EN-{response_en.status_code}")
+    return count
+
+
+def fetch_and_save_cartoon(page_start=1, page_end=3, is_tv_show=False):
+    count = 0
+    for i in range(page_start, page_end):
+
+        url_cartoon_movie = f'{BASE_URL}/discover/movie'
+        url_cartoon_tv = f'{BASE_URL}/discover/tv'
+
+        cartoon_params_ru = {
+            'api_key': API_KEY,
+            'language': 'ru-Ru',
+            'page': i,
+            'with_genres': 16,
+            'vote_count.gte': 1500
+
+        }
+
+        cartoon_params_en = {
+            'api_key': API_KEY,
+            'page': i,
+            'with_genres': 16,
+            'vote_count.gte': 1500
+
+        }
+
+        if is_tv_show:
+            response_ru = requests.get(url_cartoon_tv, params=cartoon_params_ru)
+            response_en = requests.get(url_cartoon_tv, params=cartoon_params_en)
+        else:
+            response_ru = requests.get(url_cartoon_movie, params=cartoon_params_ru)
+            response_en = requests.get(url_cartoon_movie, params=cartoon_params_en)
+
+        if response_ru.status_code == 200 and response_en.status_code == 200:
+
+            data_ru = response_ru.json().get('results', [])
+            data_en = response_en.json().get('results', [])
+
+            print(data_ru)
+            print(data_en)
+
+            for media_ru, media_en in zip(data_ru, data_en):
+
+                if is_tv_show:
+                    title = media_ru.get('name', 'Без названия')
+                    release_date = media_ru.get('first_air_date', None)
+                else:
+                    title = media_ru.get('title', 'Без названия')
+                    release_date = media_ru.get('release_date', None)
+
+                Cartoon.objects.update_or_create(
+                    tmdb_id=media_ru.get('id'),
+                    defaults={
+                        'title': title,
+                        'overview': media_ru.get('overview', ''),
+                        'release_date': release_date,
+                        'vote_average': round(media_ru.get('vote_average', 0.0), 1),
+                        'poster_path': f"https://image.tmdb.org/t/p/w500{media_en.get('poster_path')}" if media_en.get(
+                            'poster_path') else None,
+
+                    }
+                )
+                count += 1
+
     return count

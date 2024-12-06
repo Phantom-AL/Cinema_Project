@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -42,3 +43,19 @@ class Recommendations(BaseMedia):
 # Модель для сериалов
 class TvShows(BaseMedia):
     pass
+
+
+class Cartoon(BaseMedia):
+    pass
+
+
+class Reviews(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='reviews')
+    rating = models.FloatField()
+    comment = models.TextField(null=True, blank=True)
+    date_publish = models.DateField(auto_now_add=True)
+    poster = models.URLField()
+
+    def __str__(self):
+        return self.user.username
+

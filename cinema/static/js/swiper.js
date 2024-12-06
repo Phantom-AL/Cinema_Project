@@ -61,7 +61,7 @@ function initializeSwiper() {
     return new Swiper('.reviews-swiper', {
         freeMode: true,
         slidesPerView: 3,
-        spaceBetween: 15,
+        spaceBetween: 5,
         slidesPerGroup: 1,
         grid: {
             fill: 'rows',
