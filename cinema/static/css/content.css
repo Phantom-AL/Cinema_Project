@@ -16,6 +16,33 @@ body {
 }
 
 /* Основной контейнер для карточек */
+
+.my-card {
+    margin: 0 7px;
+}
+
+.my-card img {
+    border-radius: 15px;
+}
+
+.rating-high {
+    color: #32CD32;
+}
+
+.rating-medium {
+    color:  #FFD700;
+}
+
+.rating-low {
+    color: #FF4500;
+}
+
+.rating-reviews{
+    margin: 0;
+}
+
+@media (min-width: 769px) {
+
 .my-card {
     position: relative;
     border-radius: 17px; /* Закругление для всего контейнера */
@@ -150,17 +177,7 @@ body {
 
 }
 
-.rating-high {
-    color: #32CD32;
-}
 
-.rating-medium {
-    color:  #FFD700;
-}
-
-.rating-low {
-    color: #FF4500;
-}
 
 
 
@@ -186,7 +203,7 @@ body {
     color: #b0b0b0;
 }
 
-
+}
 
 /* pagination */
 

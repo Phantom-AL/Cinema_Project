@@ -3,6 +3,7 @@
 
 {% block link %}
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
 {% endblock %}
 
 {% block title %}Главное меню{% endblock %}
@@ -110,7 +111,7 @@
                             <div class="col-8">
                                 <div class="card-body text-center">
                                     <h5 class="card-title">{{ review.user }}</h5>
-                                    <p class="card-text {% if review.rating >= 6 and review.rating < 8 %} rating-medium {% endif %}
+                                    <p class="rating-reviews {% if review.rating >= 6 and review.rating < 8 %} rating-medium {% endif %}
                                             {% if review.rating >= 8 %} rating-high {% endif %}
                                             {% if review.rating < 6 %}rating-low {% endif %}"><i class="fa-solid fa-star"></i> {{ review.rating }}</p>
                                     <p class="card-text">{{ review.comment }}</p>

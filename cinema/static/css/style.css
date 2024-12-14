@@ -324,6 +324,7 @@
     background-color: #212529;
     padding-bottom: 4vw;
 
+
 }
 
 .my_swiper h2 {
@@ -378,7 +379,7 @@
 }
 
 
-@media (max-width: 699px) {
+@media (max-width: 768px) {
     .swiper-button-next,
     .swiper-button-prev {
         display: none !important;
@@ -386,7 +387,7 @@
 }
 
 /* Отображаем стрелки на экранах 600px и больше */
-@media (min-width: 700px) {
+@media (min-width: 769px) {
     .swiper-button-next,
     .swiper-button-prev {
         display: block !important;
@@ -433,27 +434,51 @@
     color: #0aa2c0;
 }
 
-@media (min-width: 700px) {
+.swiper {
+    padding: 0 5px; !important;
+}
+
+.reviews-swiper-slide {
+        padding: 10px;
+    }
+
+.my-swiper-slide img {
+        border-radius: 15px;
+    }
+
+.my-swiper-slide {
+    flex: 0 0 auto; /* Ширина слайда рассчитывается Swiper */
+}
+
+@media (max-width: 768px) {
+    .card-info,
+    .bookmark,
+    .rating {
+        display: none;
+    }
+}
+
+@media (min-width: 769px) {
 
 
     .my-swiper-slide {
         position: relative;
-        margin: 0 7px;
         border: 2px solid transparent;
         border-radius: 15px;
         overflow: hidden;
-        transition: transform 0.4s ease, background-color 0.4s ease, border 0.4s ease;
+        transition: transform 0.3s ease, background-color 0.3s ease, border 0.3s ease;
         cursor: pointer;
+
+
     }
 
-    .my-swiper-slide {
-    flex: 0 0 auto; /* Ширина слайда рассчитывается Swiper */
-}
+
     /* Изображение */
     .my-swiper-slide img {
         border-radius: 15px;
-        transition: transform 0.4s ease;
+        transition: transform 0.3s ease;
     }
+
 
     /* Эффект при наведении */
     .my-swiper-slide:hover {
@@ -470,7 +495,7 @@
         inset: 0;
         background-color: rgba(0, 0, 0, 0.6);
         opacity: 0;
-        transition: opacity 0.4s ease;
+        transition: opacity 0.3s ease;
         z-index: 1;
     }
 
@@ -484,7 +509,7 @@
     .my-swiper-slide .rating {
         position: absolute;
         opacity: 0;
-        transition: opacity 0.4s ease;
+        transition: opacity 0.3s ease;
         z-index: 2;
     }
 
@@ -525,9 +550,7 @@
         opacity: 1;
     }
 
-    .reviews-swiper-slide {
-        padding: 0 10px;
-    }
+
     .card:hover {
         transform: scale(1.05);
         box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);

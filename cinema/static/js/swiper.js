@@ -46,8 +46,10 @@ new Swiper('.cinema-slider', {
         },
         1280: {
             slidesPerView: 6.4,
-            spaceBetween: 5,
+            spaceBetween: 14,
             slidesPerGroup: 6,
+
+
 
         },
 
@@ -61,7 +63,6 @@ function initializeSwiper() {
     return new Swiper('.reviews-swiper', {
         freeMode: true,
         slidesPerView: 3,
-        spaceBetween: 5,
         slidesPerGroup: 1,
         grid: {
             fill: 'rows',
@@ -85,7 +86,7 @@ function initializeSwiper() {
         breakpoints: {
             320: {
                 slidesPerView: 1.5,
-                spaceBetween: 3,
+                /*spaceBetween: 3,*/
                 slidesPerGroup: 1,
                 grid: {
                     fill: 'rows',
@@ -94,7 +95,7 @@ function initializeSwiper() {
             },
             575: {
                 slidesPerView: 1.7,
-                spaceBetween: 3,
+                /*spaceBetween: 3,*/
                 slidesPerGroup: 1,
                 grid: {
                     fill: 'rows',
@@ -103,7 +104,7 @@ function initializeSwiper() {
             },
             720: {
                 slidesPerView: 2,
-                spaceBetween: 5,
+                /*spaceBetween: 5,*/
                 slidesPerGroup: 1,
                 grid: {
                     fill: 'rows',
@@ -112,7 +113,7 @@ function initializeSwiper() {
             },
             815: {
                 slidesPerView: 2.2,
-                spaceBetween: 10,
+
                 grid: {
                     fill: 'rows',
                     rows: 2
@@ -120,7 +121,7 @@ function initializeSwiper() {
             },
             1065: {
                 slidesPerView: 3,
-                spaceBetween: 15,
+                spaceBetween: 0,
                 grid: {
                     fill: 'rows',
                     rows: 2
