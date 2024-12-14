@@ -45,11 +45,16 @@
                                 {% endfor %}</p>
                             </div>
                         </div>
-                        <div class="bookmark">
+                        <div class="bookmark" data-id="{{ movie.id }}">
                             <i class="fa-regular fa-bookmark"></i>
                         </div>
-                        <div class="rating">
-                            <i class="fa-solid fa-star"></i> {{ movie.vote_average|floatformat:1 }}
+                        <script>
+                            const userId = "{{ user.id|default:'null' }}";  // Если user.id пуст, будет 'null'
+                        </script>
+                        <div class="rating {% if movie.vote_average >= 6 and movie.vote_average < 8 %} rating-medium {% endif %}
+                                            {% if movie.vote_average >= 8 %} rating-high {% endif %}
+                                            {% if movie.vote_average < 6 %}rating-low {% endif %}">
+                            <i class="fa-solid fa-star "></i> {{ movie.vote_average|floatformat:1 }}
                         </div>
                     </div>
                     
@@ -105,7 +110,9 @@
                             <div class="col-8">
                                 <div class="card-body text-center">
                                     <h5 class="card-title">{{ review.user }}</h5>
-                                    <p class="card-text"><i class="fa-solid fa-star"></i> {{ review.rating }}</p>
+                                    <p class="card-text {% if review.rating >= 6 and review.rating < 8 %} rating-medium {% endif %}
+                                            {% if review.rating >= 8 %} rating-high {% endif %}
+                                            {% if review.rating < 6 %}rating-low {% endif %}"><i class="fa-solid fa-star"></i> {{ review.rating }}</p>
                                     <p class="card-text">{{ review.comment }}</p>
                                     <a href="#" class="card-button" data-bs-toggle="modal"
                                        data-bs-target="#exampleModal"

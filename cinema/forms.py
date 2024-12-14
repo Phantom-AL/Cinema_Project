@@ -30,8 +30,8 @@ class RegistrationForm(forms.ModelForm):
         model = User
         fields = ('username', 'email')
         widgets = {
-            'username': forms.TextInput(attrs={'placeholder': 'Имя пользователя'}),
-            'email': forms.EmailInput(attrs={'placeholder': 'Email', 'required': 'required'})
+            'username': forms.TextInput(attrs={'placeholder': 'Имя пользователя', 'autocomplete': 'off'}),
+            'email': forms.EmailInput(attrs={'placeholder': 'Email', 'required': 'required', 'autocomplete': 'off'})
         }
 
     def clean_username(self):

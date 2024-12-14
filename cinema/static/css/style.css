@@ -512,7 +512,7 @@
         top: 10px;
         left: 10px;
         background-color: rgba(33, 37, 41, 0.9);
-        color: #FFD700;
+        /*color: #FFD700;*/
         padding: 5px 10px;
         border-radius: 5px;
         font-size: 14px;
@@ -863,5 +863,4 @@ button.btn-close {
 .container-genres {
     padding-bottom: 30vh;
 }
-
 

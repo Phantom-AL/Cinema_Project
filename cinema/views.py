@@ -32,11 +32,7 @@ def movies(request):
     return render(request, 'cinema/movies.html', context={'movies': page_obj.object_list, 'page': page_obj})
 
 
-# Сделать страницу Мультфильмы!!!
-# Страницу Жанров !!!
-# Адаптация всех страниц навигации
-# Сделать наводку на ссылку фильмы правильную !!!
-# Уменьшения кода в utils, и во вьюхе повторяющий код в функциях
+
 
 
 def serials(request):
@@ -113,11 +109,12 @@ def signup(request):
     else:
         form = RegistrationForm()
 
-    return render(request, 'registration/register.html', {"form": form})
+    return render(request, 'cinema/registration/register.html', {"form": form})
 
 
 class CustomLoginView(LoginView):
     form_class = CustomLoginForm
+    template_name = 'cinema/registration/login.html'
 
 
 def logout_view(request):

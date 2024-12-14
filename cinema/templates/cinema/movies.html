@@ -18,14 +18,19 @@
         <div class="row mb-4">
             {% for movie in movies %}
                 <div class="p-0 col-4 col-md-3 custom-lg-col mb-4">
-                    <div class="my-card " data-id="apocalypse">
-                        <img src="{{ movie.poster_path }}" class="card-img-top" alt="Apocalypse">
-                        <div class="rating">
+                    <div class="my-card " data-id="{{ movie.id }}">
+                        <img src="{{ movie.poster_path }}" class="card-img-top" alt="#">
+                        <div class="rating {% if movie.vote_average >= 6 and movie.vote_average < 8 %} rating-medium {% endif %}
+                                            {% if movie.vote_average >= 8 %} rating-high {% endif %}
+                                            {% if movie.vote_average < 6 %}rating-low {% endif %}">
                             <i class="fa-solid fa-star"></i> {{ movie.vote_average }}
                         </div>
-                        <div class="bookmark" onclick="toggleBookmark(this)">
+                        <div class="bookmark" data-id="{{ movie.id }}">
                             <i class="fa-regular fa-bookmark"></i>
                         </div>
+                        <script>
+                            const userId = "{{ user.id|default:'null' }}";  // Если user.id пуст, будет 'null'
+                        </script>
                         <div class="card-info">
                             <h5>{{ movie.title }}</h5>
                             <div class="year-genre">
