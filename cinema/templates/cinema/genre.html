@@ -5,7 +5,7 @@
 {% block content %}
     <div class="container mt-5 container-genres">
         <h1 class="text-white mb-4">Жанры</h1>
-        <div class="row row-cols-1 row-cols-md-4 row-cols-lg-5 g-4">
+        <div class="row row-cols-3  row-cols-md-4 row-cols-lg-5 g-4">
             {% for item in genres_data %}
                 {% if item.media|length >= 3 %}  <!-- Проверка, что в жанре есть хотя бы 3 постера -->
                     <div class="col">
@@ -16,7 +16,7 @@
                                     {% for media_item in item.media %}
                                         <img src="{{ media_item.poster_path }}"
                                              alt="{{ media_item.title }}"
-                                             class="poster-image position-absolute image-{{ forloop.counter }}">
+                                             class="poster-image img-fluid position-absolute image-{{ forloop.counter }}">
                                     {% endfor %}
                                 </div>
                             </div>

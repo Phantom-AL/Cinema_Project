@@ -1,0 +1,72 @@
+{% extends 'cinema/base.html' %}
+{% load static %}
+{% load number_filters %}
+{% load runtime_filters %}
+
+
+{% block body_class %}detail-page{% endblock %}
+
+{% block content %}
+    <div class="background-container">
+        <img class="background" src="{{ media.backdrop_path }}" alt="{{ media.title }}">
+        <div class="background-overlay"></div> <!-- Затемнение фона -->
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <h1>{{ media.title }}</h1>
+            <div class="info">
+                <div class="rating-imdb {% if media.vote_average >= 8 %}
+                                            rating-imdb-high
+                                        {% elif media.vote_average >= 6 %}
+                                            rating-imdb-medium
+                                        {% else %}
+                                            rating-imdb-low
+                                        {% endif %}">
+                    <div class="imdb-logo"></div>
+                    <span class="rating-score">{{ media.vote_average }}</span>
+                </div>
+                <span class="release-date">{{ media.release_date|date:"Y" }}</span> <!-- Только год -->
+                    <span>{{ media.runtime|format_runtime }}</span>
+
+                {% if media.number_of_seasons %}
+                    <span>
+                       {{ media.number_of_seasons|pluralize_season }}
+                    </span>
+                {% endif %}
+
+            </div>
+            <div class="info-genre">
+                {% for genre in media.genre.all|slice:":3" %}
+                    <p>{{ genre.name }}</p>
+                {% endfor %}
+            </div>
+            <p class="overview">{{ media.overview }}</p>
+            <script>
+                document.addEventListener("DOMContentLoaded", function () {
+                    truncateText('.overview', 300);
+                });
+            </script>
+            <div class="watch">
+
+                <div class="btn-watch">
+                    <i class="fa fa-play"></i>
+                    <span>Смотреть</span>
+                </div>
+
+                <div class="bookmark" data-id="{{ media.id }}">
+                    <i class="fa-regular fa-bookmark"></i>
+                </div>
+                <script>
+                    const userId = "{{ user.id|default:'null' }}";  // Если user.id пуст, будет 'null'
+                </script>
+            </div>
+        </div>
+    </div>
+
+
+    <h2 class="text-center text-white">hello</h2>
+    <h2>hello</h2>
+    <h2>hello</h2>
+    <h2>hello</h2>
+{% endblock %}

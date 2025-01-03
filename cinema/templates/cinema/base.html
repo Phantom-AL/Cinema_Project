@@ -15,9 +15,10 @@
 
     {% block link %}{% endblock %}
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
 
 <header>
+
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
         <div class="container-fluid">
             <a class="navbar-brand py-3 me-auto" href="{% url 'index' %}"> <img class="header-logo"
@@ -36,22 +37,22 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == '/' %}active{% endif %} mx-md-2" href="{% url 'index' %}" onclick="setActiveLink(this)">Главная</a>
+                            <a class="nav-link {% if request.path == '/' %}active{% endif %} mx-md-2" href="{% url 'index' %}">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == '/movies/' %}active{% endif %} mx-md-2"  href="{% url 'movies' %}"
+                            <a class="nav-link {% if '/movies' in request.path %}active{% endif %} mx-md-2"  href="{% url 'movies' %}"
                                >Фильмы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == '/serials/' %}active{% endif %} mx-md-2" href="{% url 'serials' %}"
+                            <a class="nav-link {% if '/serials' in request.path %}active{% endif %} mx-md-2" href="{% url 'serials' %}"
                                >Сериалы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == '/cartoon/' %}active{% endif %} mx-md-2" href="{% url 'cartoon' %}"
+                            <a class="nav-link {% if '/cartoon' in request.path %}active{% endif %} mx-md-2" href="{% url 'cartoon' %}"
                                >Мультфильмы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if request.path == '/genre/' %}active{% endif %} mx-md-2" href="{% url 'genre' %}" onclick="setActiveLink(this)">Жанры</a>
+                            <a class="nav-link {% if '/genre' in request.path %}active{% endif %} mx-md-2" href="{% url 'genre' %}">Жанры</a>
                         </li>
                     </ul>
                 </div>
@@ -81,6 +82,7 @@
         </div>
     </nav>
 </header>
+
 
 <main>
     {% block content %}

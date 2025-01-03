@@ -52,12 +52,15 @@ body {
     margin: 0 7px;
 
 
+
+
 }
 
 /* Стили для изображения */
 .my-card img {
     transition: transform 0.3s ease;
     border-radius: 15px;
+
 }
 
 
@@ -75,6 +78,11 @@ body {
 .my-card::after {
     content: ''; /* Псевдоэлемент требует content */
     position: absolute; /* Абсолютное позиционирование */
+    outline: none;
+    border: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: none;
     top: 0;
     left: 0;
     right: 0;
@@ -84,6 +92,8 @@ body {
     z-index: 1;
     opacity: 0;
     transition: opacity 0.3s ease; /* Плавное появление затемнения */
+    pointer-events: none;
+
 }
 
 /* Появление затемнения при наведении */
@@ -102,6 +112,7 @@ body {
     opacity: 0;
     transition: opacity 0.3s ease;
     z-index: 2;
+
 }
 
 
@@ -129,6 +140,17 @@ body {
     align-items: center; /* Выравнивание по вертикали */
 }
 
+/* ссылка */
+
+.link-title {
+    display: block;
+    width: 100%;
+    height: 100%;
+    position: relative;
+    text-decoration: none;
+    z-index: 1;
+}
+
 /* Закладка в правом верхнем углу */
 .my-card .bookmark {
     position: absolute;
@@ -145,6 +167,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    pointer-events: auto;
 }
 
 .bookmark:hover i {
@@ -174,6 +197,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+
 
 }
 
@@ -276,5 +300,195 @@ body {
         max-width: 20%; /* Ограничение ширины до 20% */
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+.background-container {
+    position: relative; /* Контейнер будет в обычном потоке */
+    width: 100%;
+    height: 100vh; /* Высота равна высоте окна браузера */
+    overflow: hidden; /* Скроет излишки изображения */
+    z-index: -1; /* Фон ниже контента */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.background {
+    position: absolute; /* Изображение внутри контейнера */
+    width: 100%;
+    height: auto;
+    /*height: 100%;*/
+    /*object-fit: cover;  Фон полностью заполняет контейнер */
+}
+
+.background-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.5));
+    z-index: 1; /* Затемнение поверх изображения */
+    pointer-events: none; /* Не блокирует клики */
+
+}
+
+
+
+.content {
+    position: absolute;
+    top: 25%;
+    max-width: 40%;
+    border-radius: 10px;
+    color: white;
+    text-align: start;
+    z-index: 2;
+
+}
+
+.watch {
+    display: flex;
+    gap: 30px;
+    align-items: center;
+}
+
+.watch .bookmark {
+    transition: opacity 0.3s ease;
+    font-size: 1.7rem;
+    color: #ccc;
+}
+
+.watch .bookmark:hover {
+    cursor: pointer;
+}
+
+
+.content h1 {
+    color: #cba815;
+    margin-bottom: 5vh;
+
+}
+
+/* Общий стиль для строки информации */
+.info {
+    display: flex;
+    align-items: center; /* Центровка по вертикали */
+    gap: 15px; /* Расстояние между элементами */
+    margin-bottom: 15px; /* Отступ снизу */
+    font-size: 1.2rem; /* Размер шрифта */
+    color: white; /* Белый текст */
+}
+
+/* Релиз дата */
+/*.release-date {
+    font-weight: bold;
+}*/
+
+/* Рейтинг */
+.rating {
+    display: flex;
+    align-items: center;
+    gap: 3px; /* Расстояние между иконкой и текстом */
+}
+
+
+
+/* IMDb иконка */
+.rating-imdb {
+    display: flex; /* Для выравнивания иконки и текста */
+    align-items: center; /* Центровка по вертикали */
+
+    color: white; /* Белый текст */
+    border-radius: 10px; /* Закругленные углы */
+    padding: 5px 10px; /* Отступы внутри */
+    font-size: 16px; /* Размер текста */
+    font-weight: bold; /* Жирный текст */
+    width: fit-content; /* Автоматическая ширина */
+}
+
+.rating-imdb-high {
+    background-color: #2BB12B;
+}
+
+.rating-imdb-medium {
+    background-color: #cba815;
+}
+
+.rating-imdb-low {
+    background-color: #D11A2A;
+}
+
+
+
+
+.imdb-logo {
+    background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='none'%3E%3Cg clip-path='url(%23a)'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M15.73 11.527a.815.815 0 0 1-.798.726H.805A.819.819 0 0 1 0 11.42V4.747c0-.416.294-.76.679-.822h14.379a.82.82 0 0 1 .672.715v6.887zM1.805 5.569v5.048H3.07V5.569H1.805zm3.965 0-.293 2.358-.182-1.282a38.28 38.28 0 0 0-.151-1.076H3.503v5.048H4.61l.004-3.333.467 3.333h.79l.442-3.408.004 3.408h1.105V5.569H5.77zm3.728 1.05c.014.064.021.21.021.439v1.957c0 .335-.02.541-.063.617-.042.076-.154.114-.336.114V6.432c.138 0 .232.015.282.045a.21.21 0 0 1 .096.142zm.572 3.947a.886.886 0 0 0 .38-.181.687.687 0 0 0 .215-.358c.041-.153.066-.455.066-.908V7.346c0-.477-.018-.797-.046-.96a.92.92 0 0 0-.211-.444.95.95 0 0 0-.493-.286c-.216-.058-.568-.087-1.181-.087h-.944v5.048h1.533c.303 0 .53-.018.68-.052zm2.703-.712c-.024.065-.126.097-.203.097-.076 0-.126-.031-.151-.093-.026-.062-.038-.204-.038-.425V8.098c0-.23.01-.373.033-.43.023-.057.072-.086.147-.086.077 0 .18.033.207.098.026.065.04.205.04.418v1.294c0 .244-.012.398-.035.462zm-1.611.763h1.14l.078-.322c.103.13.217.226.34.29.125.065.31.098.454.098.2 0 .373-.055.519-.164a.706.706 0 0 0 .277-.385c.039-.148.059-.374.059-.676V8.04c0-.304-.007-.503-.02-.597a.699.699 0 0 0-.117-.286.631.631 0 0 0-.281-.226 1.076 1.076 0 0 0-.436-.082c-.146 0-.332.03-.457.09-.13.065-.245.157-.337.27V5.57h-1.22v5.048z' fill='%23fff'/%3E%3C/g%3E%3Cdefs%3E%3CclipPath id='a'%3E%3Cpath fill='%23fff' d='M0 0h16v16H0z'/%3E%3C/clipPath%3E%3C/defs%3E%3C/svg%3E");
+
+    background-repeat: no-repeat;
+    background-size: 25px;
+    height: 25px;
+    margin-right: 10px;
+    width: 25px;
+}
+
+
+
+.btn-watch {
+    color: #fff;
+    padding: 10px 50px;
+    background-color: #cba815;
+    text-align: center;
+    border-radius: 10px;
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+
+    font-size: 1.2rem;
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.btn-watch i {
+    font-size: 20px;
+
+    color: #fff;
+}
+
+/* Эффект при наведении */
+.btn-watch:hover {
+    box-shadow: 0 0 15px rgba(203, 168, 21, 0.6), 0 0 30px rgba(203, 168, 21, 0.4);
+    background-color: #cba815;
+    cursor: pointer;
+}
+
+.btn-watch:active {
+    background-color: #b59613;!important; /* Более темный цвет */
+    transform: scale(0.98); /* Легкое уменьшение для эффекта нажатия */
+
+}
+
+.info-genre {
+    display: flex;
+    gap: 15px;
+}
+
+.info-genre p {
+    font-size: 1.2rem;
+}
+
+.overview {
+    font-size: 1.1rem;
+
+
+    line-height: 1.5rem; /* Высота строки */
+}
+
 
 

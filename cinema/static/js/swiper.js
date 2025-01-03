@@ -62,7 +62,6 @@ new Swiper('.cinema-slider', {
 function initializeSwiper() {
     return new Swiper('.reviews-swiper', {
         freeMode: true,
-        slidesPerView: 3,
         slidesPerGroup: 1,
         grid: {
             fill: 'rows',
@@ -85,7 +84,7 @@ function initializeSwiper() {
         },
         breakpoints: {
             320: {
-                slidesPerView: 1.5,
+                slidesPerView: 1.4,
                 /*spaceBetween: 3,*/
                 slidesPerGroup: 1,
                 grid: {
@@ -94,7 +93,7 @@ function initializeSwiper() {
                 },
             },
             575: {
-                slidesPerView: 1.7,
+                slidesPerView: 1.6,
                 /*spaceBetween: 3,*/
                 slidesPerGroup: 1,
                 grid: {

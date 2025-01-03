@@ -1,3 +1,5 @@
+
+
 /* Настройка кнопок и лого */
 
 .header-logo, .footer-logo {
@@ -39,7 +41,7 @@
 .login-button, .register-button {
     color: #fff;
     text-decoration: none;
-    border-radius: 50px;
+    border-radius: 30px;
     padding: 12px 24px;
     background-color: #cba815;
     font-size: 1.1rem;
@@ -120,10 +122,7 @@
     transition: color 0.3s ease;
 }
 
-.nav-link .active {
-    color: #e1e1e1;
-!important;
-}
+
 
 .nav-link:hover {
     color: #cba815; /* цвет текста при наведении */
@@ -162,6 +161,21 @@
     outline: none;
 }
 
+.detail-page .navbar {
+    background: transparent !important;
+    position: absolute;
+    width: 100%;
+    z-index: 3; /* Шапка поверх фона */
+}
+
+
+.navbar-dark .navbar-nav .nav-link {
+    color: white; /* Белый цвет текста */
+}
+
+.navbar-dark .navbar-toggler {
+    border-color: white; /* Белый цвет иконки бургер-меню */
+}
 
 /* Работа с изображением и текстом на нем*/
 
@@ -338,9 +352,7 @@
 
 }
 
-.reviews .swiper-wrapper, .reviews {
-    padding-top: 2.8vw;
-}
+
 
 .swiper-pagination {
     position: relative !important;
@@ -360,9 +372,7 @@
     }
 }
 
-.reviews {
-    position: relative; /* Сделать контейнер относительным */
-}
+
 
 
 .image-slider img {
@@ -394,12 +404,22 @@
     }
 }
 
-.col-4 {
-    align-self: center;
-}
+
 
 
 /* reviews секция */
+
+.reviews .swiper-wrapper, .reviews {
+    padding-top: 2.8vw;
+}
+
+.reviews {
+    position: relative; /* Сделать контейнер относительным */
+}
+
+.col-4 {
+    align-self: center;
+}
 
 .reviews {
     height: auto; /* Позволяем контейнеру автоматически увеличиваться по высоте */
@@ -408,6 +428,11 @@
 
     background: radial-gradient(circle, rgba(203, 174, 64, 1) 0%, rgba(35, 35, 35, 1) 100%);
 }
+
+.reviews-swiper-slide {
+        padding: 10px;
+
+    }
 
 
 /* Cards */
@@ -438,9 +463,12 @@
     padding: 0 5px; !important;
 }
 
-.reviews-swiper-slide {
-        padding: 10px;
-    }
+
+
+
+
+
+
 
 .my-swiper-slide img {
         border-radius: 15px;
@@ -457,6 +485,7 @@
         display: none;
     }
 }
+
 
 @media (min-width: 769px) {
 
@@ -497,6 +526,7 @@
         opacity: 0;
         transition: opacity 0.3s ease;
         z-index: 1;
+        pointer-events: none;
     }
 
     .my-swiper-slide:hover::after {
@@ -531,6 +561,7 @@
         padding: 5px 10px;
         border-radius: 5px;
         font-size: 18px;
+        pointer-events: auto;
     }
 
     .my-swiper-slide .rating {
@@ -563,11 +594,105 @@
 
 }
 
+
+
+.card-info .text-start{
+    font-size: 1rem;
+}
+
+.year-genre-main {
+    font-size: 1rem;
+
+}
+
+.swiper-slide .rating-main {
+    font-size: 0.93rem;
+    padding: 3px 7px;
+
+
+
+}
+
+.swiper-slide .bookmark-main {
+    padding: 2px 7px;!important;
+
+
+
+
+}
+
+.bookmark-main i{
+    font-size: 1.05rem;
+    padding: 0;
+
+}
+
+
+@media (max-width: 980px) {
+
+.card-info .text-start{
+    font-size: 0.85rem;
+}
+
+.year-genre-main {
+    font-size: 0.85rem;
+
+}
+
+.swiper-slide .rating-main {
+    font-size: 0.85rem;
+    padding: 1px 6px;
+
+}
+
+.swiper-slide .bookmark-main {
+    padding: 1px 6px;!important;
+}
+
+.bookmark-main i{
+    font-size: 0.90rem;
+
+
+}
+}
+
+@media (max-width: 875px) {
+
+.card-info .text-start{
+    font-size: 0.75rem;
+}
+
+.year-genre-main {
+    font-size: 0.75rem;
+
+}
+
+.swiper-slide .rating-main {
+    font-size: 0.75rem;
+    padding: 1px 5px;
+
+
+}
+
+.swiper-slide .bookmark-main {
+    padding: 0 6px;!important;
+
+
+}
+
+.bookmark-main i{
+    font-size: 0.80rem;
+
+
+}
+}
+
 /* Section  */
 
 .my-genre {
     background-color: #232323;
 }
+
 
 .card-body-genre{
     position: relative;
@@ -586,6 +711,45 @@
     position: absolute;
     top: 0;
     left: 15%;
+}
+
+
+
+/* Переделать позже */
+
+@media (max-width: 1200px) {
+    .poster-image {
+    width: 85px;
+    height: 130px;
+
+}
+
+
+}
+
+@media (max-width: 992px) {
+    .poster-image {
+    width: 75px;
+    height: 120px;
+
+}
+
+
+}
+
+@media (max-width: 538px) {
+    .poster-image {
+    width: 60px;
+    height: 100px;
+
+
+}
+    .my-genre {
+        width: 135px;
+        height: 200px;
+    }
+
+
 }
 
 .image-1 {
@@ -616,7 +780,7 @@
         font-size: 1.1rem;
     }
 
-    .card-text {
+    .card-text, .rating-reviews {
         font-size: 1.1rem;
     }
 }
@@ -631,7 +795,7 @@
         font-size: 1.3rem;
     }
 
-    .card-text {
+    .card-text, .rating-reviews {
         font-size: 1.3rem;
     }
 }
@@ -646,7 +810,7 @@
         font-size: 1.5rem;
     }
 
-    .card-text {
+    .card-text, .rating-reviews {
         font-size: 1.5rem;
     }
 
@@ -668,7 +832,7 @@
         font-size: 0.8rem;
     }
 
-    .card-text {
+    .card-text, .rating-reviews {
         font-size: 0.8rem;
     }
 }
@@ -682,7 +846,7 @@
         font-size: 0.7rem;
     }
 
-    .card-text {
+    .card-text, .rating-reviews {
         font-size: 0.7rem;
 
     }
@@ -694,18 +858,18 @@
 
 }
 
-@media (max-width: 410px) {
+@media (max-width: 440px) {
     .card-title {
-        font-size: 0.7rem;
-        margin-bottom: 2px;
+        font-size: 0.6rem;
+        margin-bottom: 1px;
     }
 
     .card-button {
-        font-size: 0.6rem;
+        font-size: 0.5rem;
     }
 
-    .card-text {
-        font-size: 0.6rem;
+    .card-text, .rating-reviews {
+        font-size: 0.5rem;
 
     }
 }
@@ -886,4 +1050,8 @@ button.btn-close {
 .container-genres {
     padding-bottom: 30vh;
 }
+
+
+
+
 

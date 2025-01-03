@@ -91,3 +91,29 @@ if (exampleModal) {
     });
 }
 
+
+
+
+
+
+
+function truncateText(selector, maxLength) {
+    const element = document.querySelector(selector);
+    if (!element) return;
+
+    const text = element.textContent;
+    if (text.length > maxLength) {
+        let truncated = text.slice(0, maxLength);
+        const lastPeriod = truncated.lastIndexOf('.');
+        if (lastPeriod > -1) {
+            truncated = truncated.slice(0, lastPeriod + 1); // Завершаем предложение
+        } else {
+            truncated += '...'; // Если нет точки
+        }
+        element.textContent = truncated;
+    }
+}
+
+// Применяем к вашему блоку
+truncateText('.overview', 300);
+

@@ -32,33 +32,37 @@
             <div class="swiper-wrapper">
                 <!-- Slides -->
                 {% for movie in movies %}
-                    
+
                     <div class="swiper-slide my-swiper-slide">
                         <div class="image-slider">
-                            <img src="{{ movie.poster_path }}" alt="Cinema">
+                            <a href="{% url 'detail_index' movie.slug %}" class="link-title">
+                                <div class="poster">
+                                    <img src="{{ movie.poster_path }}" alt="{{ movie.title }}" class="card-img-top">
+                                </div>
+                            </a>
                         </div>
                         <div class="card-info">
                             <h5 class="text-start">{{ movie.title }}</h5>
-                            <div class="year-genre">
+                            <div class="year-genre year-genre-main">
                                 <p class="muted-text">{{ movie.release_date|date:"Y" }}</p>
                                 <p class="muted-text-genre">{% for genre in movie.genre.all %}
                                     {{ genre.name }}{% if not forloop.last %}, {% endif %}
                                 {% endfor %}</p>
                             </div>
                         </div>
-                        <div class="bookmark" data-id="{{ movie.id }}">
+                        <div class="bookmark bookmark-main" data-id="{{ movie.id }}">
                             <i class="fa-regular fa-bookmark"></i>
                         </div>
                         <script>
                             const userId = "{{ user.id|default:'null' }}";  // Если user.id пуст, будет 'null'
                         </script>
-                        <div class="rating {% if movie.vote_average >= 6 and movie.vote_average < 8 %} rating-medium {% endif %}
+                        <div class="rating rating-main {% if movie.vote_average >= 6 and movie.vote_average < 8 %} rating-medium {% endif %}
                                             {% if movie.vote_average >= 8 %} rating-high {% endif %}
                                             {% if movie.vote_average < 6 %}rating-low {% endif %}">
                             <i class="fa-solid fa-star "></i> {{ movie.vote_average|floatformat:1 }}
                         </div>
                     </div>
-                    
+
                 {% endfor %}
 
             </div>
@@ -99,14 +103,19 @@
         <div class="reviews-swiper swiper">
             <div class="swiper-wrapper">
                 <!-- Slides -->
-                
+
                 {% for review in reviews %}
                 <div class="swiper-slide reviews-swiper-slide">
                     <div class="card">
                         <div class="row g-0">
                             <div class="col-4">
-                                <img src="{{ review.poster }}" class="img-fluid rounded-start"
-                                     alt="...">
+                                <a href="https://google.com" class="link-title">
+                                <div class="poster">
+                                    <img src="{{ review.poster }}" class="img-fluid rounded-start"
+                                     alt="#">
+                                </div>
+                            </a>
+                                
                             </div>
                             <div class="col-8">
                                 <div class="card-body text-center">
@@ -125,9 +134,9 @@
                         </div>
                     </div>
                 </div>
-                
+
                 {% endfor %}
-                
+
             </div>
             <!-- If we need navigation buttons -->
         <div class="swiper-button-prev"></div>
@@ -137,7 +146,7 @@
         <!-- If we need pagination -->
         <div class="swiper-pagination"></div>
 
-        
+
 
 
     </section>

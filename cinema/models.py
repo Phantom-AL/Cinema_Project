@@ -17,7 +17,10 @@ class BaseMedia(models.Model):
     overview = models.TextField(null=True, blank=True)  # Описание
     release_date = models.DateField(null=True, blank=True)  # Дата выхода фильма или шоу
     vote_average = models.FloatField(null=True, blank=True)  # Средний рейтинг
-    poster_path = models.URLField(max_length=500, blank=True, null=True)  # Путь к постеру
+    poster_path = models.URLField(max_length=75, blank=True, null=True)  # Путь к постеру
+    slug = models.SlugField(max_length=75, blank=True, null=True, unique=True)
+    backdrop_path = models.URLField(max_length=75, blank=True, null=True)
+    runtime = models.IntegerField(null=True, blank=True)
     genre = models.ManyToManyField(Genres, blank=True)
 
     class Meta:
@@ -37,16 +40,16 @@ class Movies(BaseMedia):
 
 # Модель для рекомендаций
 class Recommendations(BaseMedia):
-    pass
+    number_of_seasons = models.IntegerField(null=True, blank=True)
 
 
 # Модель для сериалов
 class TvShows(BaseMedia):
-    pass
+    number_of_seasons = models.IntegerField(null=True, blank=True)
 
 
 class Cartoon(BaseMedia):
-    pass
+    number_of_seasons = models.IntegerField(null=True, blank=True)
 
 
 class Reviews(models.Model):
