@@ -92,11 +92,6 @@ if (exampleModal) {
 }
 
 
-
-
-
-
-
 function truncateText(selector, maxLength) {
     const element = document.querySelector(selector);
     if (!element) return;

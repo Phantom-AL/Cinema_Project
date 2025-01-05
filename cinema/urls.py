@@ -5,16 +5,14 @@ from django.urls import path, reverse_lazy
 from .forms import CustomSetPasswordForm, CustomPasswordResetForm
 from .views import *
 
+
 urlpatterns = [
     path('', index, name='index'),
-    path('recommendations/<slug:slug>', detail_recommendations, name='detail_index'),
+    path('<str:model_name>/<slug:slug>/', detail, name='detail'),
     path('movies/', movies, name='movies'),
-    path('movies/<slug:slug>', detail_move, name='detail_move'),
-    path('serials/', serials, name='serials'),
-    path('serials/<slug:slug>', detail_serials, name='detail_serials'),
+    path('tvshows/', tvshows, name='serials'),
     path('genre/', genre, name='genre'),
     path('cartoon/', cartoon, name='cartoon'),
-    path('cartoon/<slug:slug>', detail, name='movie_detail'),
     path('signup/', signup, name='signup'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),

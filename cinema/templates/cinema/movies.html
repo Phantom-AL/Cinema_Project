@@ -19,7 +19,7 @@
             {% for movie in movies %}
                 <div class="p-0 col-4 col-md-3 custom-lg-col mb-4">
                     <div class="my-card " data-id="{{ movie.id }}">
-                        <a href="{% url 'detail_move' movie.slug %}" class="link-title">
+                        <a href="{% url 'detail' model_name movie.slug %}" class="link-title">
                             <div class="poster">
                                 <img src="{{ movie.poster_path }}" alt="{{ movie.title }}" class="card-img-top">
                             </div>
