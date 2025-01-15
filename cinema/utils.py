@@ -3,6 +3,9 @@ from django.utils.text import slugify
 from film_base import settings
 from .models import Genres, Recommendations
 
+import asyncio
+from hdrezka import Search
+
 API_KEY = settings.API_KEY
 API_KEY_OMDB = settings.API_KEY_OMDB
 BASE_URL = 'https://api.themoviedb.org/3'
@@ -163,6 +166,7 @@ def fetch_and_save_media(media_model, page_start=1, page_end=3, with_genres=Fals
                 # Создаём словарь defaults с общими полями
                 defaults = {
                     'title': title,
+                    'title_en': title_en,
                     'slug': generated_slug,
                     'overview': media_ru.get('overview', ''),
                     'release_date': release_date,
@@ -280,3 +284,35 @@ def fetch_and_save_recommendations(title_search, media):
             print(f'Неверное title_search или media: {title_search} - {media}')
 
     return f'total_results: {count}'
+
+
+async def main():
+    # Поиск сериала "Breaking Bad"
+    search_results = await Search('Breaking Bad').get_page(1)
+    first_result = search_results[0]  # Берём первый результат
+    player = await first_result.player  # Получаем плеер
+
+    # Информация о сериале
+    print(player.post.info, end='\n\n')
+
+    # Поиск переводчика с субтитрами
+    translator_id = None  # По умолчанию
+    for name, id_ in player.post.translators.name_id.items():
+        if 'субтитры' in name.casefold():  # Поиск "субтитры" в названии
+            translator_id = id_
+            break
+
+    # Получение потока видео
+    stream = await player.get_stream(1, 1, translator_id)  # Первый сезон, первая серия
+    video = stream.video
+
+    # Вывод URL видео в разных качествах
+    print(video.last_url)  # Лучшее качество (.m3u8)
+    print(video[video.min].last_url.mp4, end='\n\n')  # Худшее качество (.mp4)
+
+    # Субтитры
+    subtitles = stream.subtitles
+    print(subtitles.default.url)  # URL субтитров по умолчанию
+
+
+

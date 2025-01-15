@@ -10,16 +10,19 @@
 
 
     <div class="container mt-5">
-        <div class="movies-container ">
-            <h1 class="mb-4">Фильмы</h1>
-
+        <div class="movies-container">
+            <h1 >Фильмы</h1>
+            <form method="get" action="{% url 'search_movie' %}">
+                <input class="search_input" type="search" placeholder="Введите название" aria-label="Поиск" name="q">
+                <button class="search_btn" type="submit">Поиск</button>
+            </form>
         </div>
 
         <div class="row mb-4">
             {% for movie in movies %}
                 <div class="p-0 col-4 col-md-3 custom-lg-col mb-4">
                     <div class="my-card " data-id="{{ movie.id }}">
-                        <a href="{% url 'detail' model_name movie.slug %}" class="link-title">
+                        <a href="{% url 'detail' model_name movie.slug movie.release_date|date:'Y' %}" class="link-title">
                             <div class="poster">
                                 <img src="{{ movie.poster_path }}" alt="{{ movie.title }}" class="card-img-top">
                             </div>

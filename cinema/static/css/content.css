@@ -12,7 +12,55 @@ body {
 }
 
 .movies-container h1 {
-    color: #e1e1e1;
+    color: #fff;
+}
+
+.movies-container {
+    margin-bottom: 8vh;
+}
+
+.movies-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.movies-container .search_btn{
+    background-color: #cba815;
+    color: #fff;
+    padding: 10px 20px;
+    border-radius: 10px;
+    border: 0;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+
+
+}
+
+
+
+.movies-container .search_btn:hover {
+    background-color: #d4b546; /* Светлее основного (золотисто-желтый) */
+    box-shadow: 0 0 15px rgba(203, 168, 21, 0.6), 0 0 10px rgba(203, 168, 21, 0.4);
+
+}
+
+.movies-container .search_input {
+    width: 350px;
+    padding: 10px;
+    margin-right: 10px;
+    border-radius: 10px;
+    background-color: #212529;
+    outline: none;
+    border: 1px solid #e1e1e1;
+    color: #fff;
+    transition: box-shadow 0.3s ease;
+}
+
+
+.movies-container .search_input:focus {
+    -webkit-box-shadow: 0px 0px 10px 5px rgba(176, 147, 19, 0.7);
+    -moz-box-shadow: 0px 0px 10px 5px rgba(176, 147, 19, 0.7);
+    box-shadow: 0px 0px 10px 5px rgba(176, 147, 19, 0.7);
 }
 
 /* Основной контейнер для карточек */
@@ -488,6 +536,72 @@ body {
 
 
     line-height: 1.5rem; /* Высота строки */
+}
+
+
+
+
+/* Работа с плеером */
+
+
+.video {
+    text-align: center;
+    padding-top: 7vh;
+}
+/* Общий контейнер для сезонов и эпизодов */
+.seasons-container,
+.episodes-container {
+    width: 940px; /* Фиксированная ширина */
+    margin: 0 auto; /* Центрирование */
+    display: flex;
+    flex-wrap: wrap; /* Для переноса кнопок, если их много */
+    justify-content: center; /* Выровнять кнопки по центру */
+    gap: 10px; /* Расстояние между кнопками */
+    padding: 20px 0; /* Отступы сверху и снизу */
+}
+/* Общий стиль для кнопок */
+.button {
+    background-color: #343a40; /* Темный фон для кнопок */
+    color: #fff;
+    border: 1px solid #6c757d;
+    padding: 10px 15px;
+    font-size: 16px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s, transform 0.2s, box-shadow 0.3s;
+}
+
+/* Состояние при наведении */
+.button:hover {
+    background-color: #5a6268;; /* Светлее при наведении */
+}
+
+/* Активное состояние кнопок */
+.button.active {
+    background-color: #5a6268;; /* Более светлый фон для активного состояния */
+    border-color: #adb5bd;
+    font-weight: bold; /* Выделение шрифтом */
+    transform: scale(1.05); /* Легкое увеличение */
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4); /* Легкая тень для акцента */
+}
+
+/* Контейнер для эпизодов */
+.episodes {
+    display: flex;
+    flex-wrap: wrap; /* Перенос кнопок */
+    gap: 10px; /* Расстояние между кнопками */
+    justify-content: center; /* Выровнять кнопки по центру */
+    padding: 20px 0; /* Отступы сверху и снизу */
+}
+
+
+
+/* Адаптивность */
+@media (max-width: 768px) {
+    .season-btn, .episode-btn {
+        font-size: 12px; /* Уменьшение текста */
+        padding: 8px 10px; /* Уменьшение отступов */
+    }
 }
 
 

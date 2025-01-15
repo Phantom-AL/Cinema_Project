@@ -3,7 +3,6 @@
 {% load number_filters %}
 {% load runtime_filters %}
 
-
 {% block body_class %}detail-page{% endblock %}
 
 {% block content %}
@@ -27,7 +26,7 @@
                     <span class="rating-score">{{ media.vote_average }}</span>
                 </div>
                 <span class="release-date">{{ media.release_date|date:"Y" }}</span> <!-- Только год -->
-                    <span>{{ media.runtime|format_runtime }}</span>
+                <span>{{ media.runtime|format_runtime }}</span>
 
                 {% if media.number_of_seasons %}
                     <span>
@@ -63,10 +62,166 @@
             </div>
         </div>
     </div>
+    
+
+    <!-- Кнопки сезонов -->
+    <div class="seasons-container">
+        {% for season, episodes in player_data.available_seasons_list %}
+            <button
+                    class="season-btn button{% if loop.first %}active{% endif %}"
+                    data-season="{{ season }}">
+                Сезон {{ season }}
+            </button>
+        {% endfor %}
+    </div>
 
 
-    <h2 class="text-center text-white">hello</h2>
-    <h2>hello</h2>
-    <h2>hello</h2>
-    <h2>hello</h2>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- Подключение плагина качества -->
+<script src="https://cdn.jsdelivr.net/npm/@videojs/http-streaming/dist/videojs-http-streaming.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector/dist/videojs-hls-quality-selector.min.js"></script>
+
+    <div id="player-1" class="video" style="position: relative;">
+        <video
+                id="video-1"
+                class="video-js vjs-default-skin"
+                controls
+                preload="auto"
+                width="640"
+                height="346"
+                poster="{{ media.poster_path }}"
+                data-setup={}
+        >
+            <track src="{{ player_data.subtitles_url.russian_sub }}" kind="subtitles" srclang="ru" label="Русский">
+            <track src="{{ player_data.subtitles_url.english_sub }}" kind="subtitles" srclang="en" label="English">
+
+            <source src="{{ player_data.video_urls.url_1080p }}" type="application/vnd.apple.mpegurl" data-res="1080p">
+
+            {% comment %}<source src="{{ player_data.video_urls.url_720p }}" type="application/vnd.apple.mpegurl" data-res="720p">
+            <source src="{{ player_data.video_urls.url_360p }}" type="application/vnd.apple.mpegurl" data-res="360p">
+            <source src="{{ player_data.video_urls.url_480p }}" type="application/vnd.apple.mpegurl" data-res="480p">
+            <source src="{{ player_data.video_urls.url_1080p_Ultra }}" type="application/vnd.apple.mpegurl"
+                    data-res="1080p_Ultra">{% endcomment %}
+            <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a
+                web browser that
+                <a href="https://videojs.com/html5-video-support/" target="_blank">supports HTML5 video</a>
+            </p>
+        </video>
+    </div>
+
+
+    <!-- Список эпизодов -->
+    <div class="episodes-container">
+        {% for season, episodes in player_data.available_seasons_list %}
+            <div class="episodes" id="season-episodes-{{ season }}"
+                 {% if not loop.first %}style="display: none;"{% endif %}>
+                {% for episode in episodes %}
+                    <button
+                            class="episode-btn button {% if loop.first %}active{% endif %}"
+                            onclick="loadEpisode({{ season }}, {{ episode }})">
+                        Серия {{ episode }}
+                    </button>
+                {% endfor %}
+            </div>
+        {% endfor %}
+    </div>
+
+    <script>
+        // Логика переключения сезонов и эпизодов
+        document.querySelectorAll('.season-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                const seasonId = button.getAttribute('data-season');
+
+                // Удалить класс active у всех кнопок сезонов
+                document.querySelectorAll('.season-btn').forEach(btn => btn.classList.remove('active'));
+
+                // Добавить класс active к выбранной кнопке
+                button.classList.add('active');
+
+                // Скрыть все эпизоды
+                document.querySelectorAll('.episodes').forEach(epContainer => {
+                    epContainer.style.display = 'none';
+                });
+
+                // Показать эпизоды выбранного сезона
+                document.getElementById(`season-episodes-${seasonId}`).style.display = 'flex';
+            });
+        });
+
+        // Функция загрузки эпизода
+        function loadEpisode(season, episode) {
+            const url = new URL(window.location.href);
+            url.searchParams.set('season', season); // Добавляем параметр сезона
+            url.searchParams.set('episode', episode); // Добавляем параметр эпизода
+            window.location.href = url.toString(); // Перезагружаем страницу с обновленным URL
+        }
+
+        // Автоматическая активация сезона и эпизода при загрузке страницы
+        window.onload = () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const season = urlParams.get('season');
+            const episode = urlParams.get('episode');
+
+            // Если в URL есть параметры для сезона и эпизода, восстанавливаем их
+            if (season) {
+                // Активируем правильный сезон
+                const seasonButton = document.querySelector(`.season-btn[data-season="${season}"]`);
+                if (seasonButton) {
+                    seasonButton.classList.add('active');
+                    document.querySelectorAll('.episodes').forEach(epContainer => {
+                        epContainer.style.display = 'none';
+                    });
+                    document.getElementById(`season-episodes-${season}`).style.display = 'flex';
+                }
+            }
+
+            if (episode) {
+                // Активируем правильный эпизод
+                const seasonEpisodes = document.getElementById(`season-episodes-${season}`);
+                if (seasonEpisodes) {
+                    const episodeButton = seasonEpisodes.querySelector(`.episode-btn:nth-child(${episode})`);
+                    if (episodeButton) {
+                        episodeButton.classList.add('active'); // Добавляем класс active к эпизоду
+                    }
+                }
+            }
+        };
+        // Работа с плеером
+        // Инициализация Video.js
+    const player = videojs('video-1', {
+
+    });
+
+        // Добавляем обработчик для нажатий клавиш
+        document.addEventListener('keydown', (event) => {
+            // Доступ к текущему времени видео
+            const currentTime = player.currentTime();
+            const skipStep = 5; // Шаг перемотки в секундах
+
+            switch (event.code) {
+                case 'ArrowRight': // Перемотка вперед
+                    player.currentTime(currentTime + skipStep);
+                    break;
+                case 'ArrowLeft': // Перемотка назад
+                    player.currentTime(Math.max(0, currentTime - skipStep)); // Не меньше 0
+                    break;
+                case 'Space':
+                    if (player.paused()) {
+                        player.play();
+                    } else {
+                        player.pause();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        });
+
+
+    </script>
+
+
+
+
 {% endblock %}

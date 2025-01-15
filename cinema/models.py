@@ -14,6 +14,7 @@ class Genres(models.Model):
 class BaseMedia(models.Model):
     tmdb_id = models.IntegerField(unique=True)  # Уникальный ID из TMDb
     title = models.CharField(max_length=75, null=True, blank=True)  # Название (общее поле)
+    title_en = models.CharField(max_length=75, null=True, blank=True)
     overview = models.TextField(null=True, blank=True)  # Описание
     release_date = models.DateField(null=True, blank=True)  # Дата выхода фильма или шоу
     vote_average = models.FloatField(null=True, blank=True)  # Средний рейтинг

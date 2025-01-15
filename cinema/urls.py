@@ -8,11 +8,15 @@ from .views import *
 
 urlpatterns = [
     path('', index, name='index'),
-    path('<str:model_name>/<slug:slug>/', detail, name='detail'),
     path('movies/', movies, name='movies'),
     path('tvshows/', tvshows, name='serials'),
     path('genre/', genre, name='genre'),
     path('cartoon/', cartoon, name='cartoon'),
+    path('search/movies/', SearchResultsMovieView.as_view(), name='search_movie'),
+    path('search/tvshows/', SearchResultsTvShowsView.as_view(), name='search_tvshows'),
+    path('search/cartoon/', SearchResultsCartoonView.as_view(), name='search_cartoon'),
+
+    path('<str:model_name>/<slug:slug>/<int:year>/', detail, name='detail'),
     path('signup/', signup, name='signup'),
     path('login/', CustomLoginView.as_view(), name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),

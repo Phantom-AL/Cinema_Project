@@ -41,16 +41,18 @@
 .login-button, .register-button {
     color: #fff;
     text-decoration: none;
-    border-radius: 30px;
+    border-radius: 20px;
     padding: 12px 24px;
     background-color: #cba815;
     font-size: 1.1rem;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
 }
 
 .login-button:hover {
     background-color: #b09313;
-    color: #e1e1e1;
+    box-shadow: 0 0 15px rgba(203, 168, 21, 0.6), 0 0 10px rgba(203, 168, 21, 0.4);
+
 }
 
 .register-button {
@@ -944,7 +946,7 @@ button.btn-close {
 
     .login-button, .register-button {
         font-size: 1.3rem;
-        padding: 14px 30px;
+
     }
 
     .nav-link {
@@ -983,8 +985,9 @@ button.btn-close {
     }
 
     .login-button, .register-button {
-        font-size: 1.6rem;
-        padding: 16px 34px;
+        font-size: 1.5rem;
+        padding: 14px 24px;
+
     }
 
     .nav-link {
@@ -1024,7 +1027,7 @@ button.btn-close {
 
     .login-button, .register-button {
         font-size: 1.9rem;
-        padding: 18px 30px;
+
     }
 
     .nav-link {
