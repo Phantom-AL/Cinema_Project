@@ -58,7 +58,7 @@ class Reviews(models.Model):
     rating = models.FloatField()
     comment = models.TextField(null=True, blank=True)
     date_publish = models.DateField(auto_now_add=True)
-    poster = models.URLField()
+    poster = models.URLField(null=True, blank=True)
 
     def __str__(self):
         return self.user.username

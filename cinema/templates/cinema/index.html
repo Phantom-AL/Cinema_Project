@@ -124,10 +124,18 @@
                                             {% if review.rating >= 8 %} rating-high {% endif %}
                                             {% if review.rating < 6 %}rating-low {% endif %}"><i class="fa-solid fa-star"></i> {{ review.rating }}</p>
                                     <p class="card-text">{{ review.comment }}</p>
-                                    <a href="#" class="card-button" data-bs-toggle="modal"
+                                    <a href="#" class="card-button" 
+                                       
+                                       data-bs-toggle="modal"
                                        data-bs-target="#exampleModal"
                                        data-bs-whatever="{{ review.comment }}"
-                                       data-bs-name="Елена Д.">Показать больше</a>
+                                       data-bs-name="{{ review.user }}">
+                                        
+                                        {% if review.comment %} Показать больше {% endif %}
+                                    
+                                    </a>
+                                       
+                                       
                                     <p class="card-text"><small>{{ review.date_publish }}</small></p>
                                 </div>
                             </div>

@@ -3,7 +3,7 @@
 {% load static %}
 
 
-{% block title %} Фильмы {% endblock %}
+{% block title %} {{ model_name|capfirst }} {% endblock %}
 
 
 {% block content %}
@@ -11,8 +11,8 @@
 
     <div class="container mt-5">
         <div class="movies-container">
-            <h1 >Фильмы</h1>
-            <form method="get" action="{% url 'search_movie' %}">
+            <h1 >{{ model_name|capfirst }}</h1>
+            <form method="get" action="{% if model_name == 'movies' %}{% url 'search_movie' %}{% elif model_name == 'tvshows' %}{% url 'search_tvshows' %}{% elif model_name == 'cartoon' %}{% url 'search_cartoon' %}{% endif %}">
                 <input class="search_input" type="search" placeholder="Введите название" aria-label="Поиск" name="q">
                 <button class="search_btn" type="submit">Поиск</button>
             </form>

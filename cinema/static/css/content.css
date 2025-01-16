@@ -490,7 +490,8 @@ body {
 
 
 .btn-watch {
-    color: #fff;
+    color: #000;
+    font-weight: bold;
     padding: 10px 50px;
     background-color: #cba815;
     text-align: center;
@@ -506,7 +507,7 @@ body {
 .btn-watch i {
     font-size: 20px;
 
-    color: #fff;
+    color: #000;
 }
 
 /* Эффект при наведении */
@@ -546,7 +547,7 @@ body {
 
 .video {
     text-align: center;
-    padding-top: 7vh;
+
 }
 /* Общий контейнер для сезонов и эпизодов */
 .seasons-container,
@@ -605,4 +606,87 @@ body {
 }
 
 
+/* работа с комментариями */
 
+.comment-title {
+    color: #cba815;
+    text-align: center;
+    margin-top: 7vh;
+}
+
+.form-review-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%; /* Высота контейнера */
+    margin-top: 20px; /* Отступ сверху */
+    margin-bottom: 20px; /* Отступ сверху */
+}
+
+.form-review {
+    padding: 20px;
+    border-radius: 10px; /* Скруглённые углы */
+    max-width: 650px; /* Ограничиваем ширину */
+    width: 100%; /* Адаптивная ширина */
+    color: #fff; /* Белый текст */
+}
+
+.form-label {
+    display: block;
+    margin-bottom: 12px; /* Увеличенный отступ между лейблом и полем */
+    font-weight: bold;
+    font-size: 14px; /* Размер шрифта метки */
+    color: #f5c518; /* Золотистый цвет меток */
+}
+
+.form-group {
+    margin-bottom: 20px; /* Увеличенный отступ между полями */
+}
+
+.form-control {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid rgba(255, 255, 255, 0.3); /* Прозрачная белая рамка */
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0); /* Полностью прозрачный фон */
+    color: #fff; /* Белый текст */
+    transition: border-color 0.3s ease, box-shadow 0.3s ease; /* Плавный переход */
+}
+
+.form-control::placeholder {
+    color: rgba(255, 255, 255, 0.7); /* Светлый оттенок для плейсхолдера */
+}
+
+.form-control:focus {
+    background-color: rgba(255, 255, 255, 0); /* Сохраняем прозрачный фон при фокусе */
+    border-color: #e1e1e1; /* Золотистая рамка при фокусе */
+    box-shadow: 0px 0px 15px 5px rgba(176, 147, 19, 0.7); /* Золотая подсветка */
+    color: #fff; /* Белый цвет текста при фокусе */
+    caret-color: #fff; /* Цвет курсора */
+}
+
+textarea.form-control {
+    resize: none; /* Отключаем изменение размера текстового поля */
+}
+
+.btn-submit {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #f5c518; /* Золотистая кнопка */
+    color: #000; /* Чёрный текст на кнопке */
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    width: 100%; /* Кнопка занимает всю ширину */
+    margin-top: 15px;
+}
+
+.btn-submit:hover {
+    background-color: #e4b816; /* Темнее при наведении */
+    box-shadow: 0px 4px 12px rgba(176, 147, 19, 0.5); /* Легкая тень при наведении */
+}

@@ -11,8 +11,7 @@ from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
 from hdrezka import Search
 
-from .forms import CustomLoginForm
-from .forms import RegistrationForm
+from .forms import RegistrationForm, ReviewForm, CustomLoginForm
 from .models import Movies, Recommendations, TvShows, Cartoon, Genres, Reviews
 
 
@@ -25,7 +24,8 @@ def index(request):
 
     reviews = cache.get('reviews')
     if not reviews:
-        reviews = Reviews.objects.prefetch_related('user')
+        reviews = Reviews.objects.select_related('user')
+
         cache.set('reviews', reviews, 2592000)  # Кэшируем на 2592000 секунд
 
     return render(request, 'cinema/index.html', context={'movies': rec_movies, 'reviews': reviews,
@@ -55,25 +55,26 @@ def data_paginator(request, model):
     return page_obj
 
 
+def content_list(request, model, model_name):
+    page_obj = data_paginator(request, model)
+
+    return render(request, 'cinema/movies.html', context={
+        'movies': page_obj.object_list,
+        'page': page_obj,
+        'model_name': model_name,
+     })
+
+
 def movies(request):
-    page_obj = data_paginator(request, Movies)
-    model_name = Movies.__name__.lower()
-    return render(request, 'cinema/movies.html', context={'movies': page_obj.object_list, 'page': page_obj,
-                                                          'model_name': model_name})
+    return content_list(request, model=Movies, model_name='movies')
 
 
 def tvshows(request):
-    page_obj = data_paginator(request, TvShows)
-    model_name = TvShows.__name__.lower()
-    return render(request, 'cinema/serials.html', context={'movies': page_obj.object_list, 'page': page_obj,
-                                                           'model_name': model_name})
+    return content_list(request, model=TvShows, model_name='tvshows')
 
 
 def cartoon(request):
-    page_obj = data_paginator(request, Cartoon)
-    model_name = Cartoon.__name__.lower()
-    return render(request, 'cinema/cartoon.html', context={'movies': page_obj.object_list, 'page': page_obj,
-                                                           'model_name': model_name})
+    return content_list(request, model=Cartoon, model_name='cartoon')
 
 
 class BaseSearchResultView(ListView):
@@ -139,7 +140,6 @@ async def get_player_data(slug, model_name, year, season, episode):
             return None
 
         first_result = None
-
         # Поиск по году
         for result in search_results:
             # Разделяем строку info по запятой и пробелу
@@ -254,6 +254,19 @@ def detail(request, model_name, slug, year, season=None, episode=None):
     # Асинхронный вызов функции
     player_data = loop.run_until_complete(get_player_data(slug, model_name, year, season, episode))
 
+    # Обработка формы отзыва
+    if request.method == 'POST':
+        if request.user.is_authenticated:  # Проверяем, что пользователь авторизован
+            form = ReviewForm(request.POST)
+            if form.is_valid():
+                review = form.save(commit=False)
+                review.user = request.user
+                review.poster = media.poster_path
+                review.save()
+                return redirect(request.path)
+        else:
+            return redirect('login')  # Перенаправление на страницу входа
+
     context = {
         'media': media,
         'player_data': player_data,
@@ -304,6 +317,16 @@ def genre(request):
         cache.set('genres_data', genres_data, timeout=2592000)
     # Если genres_data пустое, то вернется пустая страница (можно изменить на другую страницу, если нужно)
     return render(request, 'cinema/genre.html', {'genres_data': genres_data})
+
+
+def genre_detail(request):
+    # Получаем все жанры с предварительным выбором нужных данных
+    genres = Genres.objects.all()
+
+    # Получаем все фильмы, сериалы и мультфильмы с предварительной загрузкой жанров
+    movies = Movies.objects.prefetch_related('genre')
+    tv_shows = TvShows.objects.prefetch_related('genre')
+    cartoons = Cartoon.objects.prefetch_related('genre')
 
 
 def signup(request):

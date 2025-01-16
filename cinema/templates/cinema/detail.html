@@ -62,7 +62,7 @@
             </div>
         </div>
     </div>
-    
+
 
     <!-- Кнопки сезонов -->
     <div class="seasons-container">
@@ -78,8 +78,8 @@
 
     <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
     <!-- Подключение плагина качества -->
-<script src="https://cdn.jsdelivr.net/npm/@videojs/http-streaming/dist/videojs-http-streaming.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector/dist/videojs-hls-quality-selector.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@videojs/http-streaming/dist/videojs-http-streaming.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector/dist/videojs-hls-quality-selector.min.js"></script>
 
     <div id="player-1" class="video" style="position: relative;">
         <video
@@ -111,6 +111,8 @@
     </div>
 
 
+
+
     <!-- Список эпизодов -->
     <div class="episodes-container">
         {% for season, episodes in player_data.available_seasons_list %}
@@ -126,6 +128,29 @@
             </div>
         {% endfor %}
     </div>
+
+    <h3 class="comment-title">Прокомментировать </h3>
+<div class="form-review-container">
+    <div class="form-review">
+        <form action="" method="post">
+            {% csrf_token %}
+{#            <div class="form-group">#}
+{#                <label for="comment-username" class="form-label">Имя пользователя</label>#}
+{#                <input id="comment-username" name="username" class="form-control" type="text" placeholder="Введите имя" aria-label="Имя пользователя" required>#}
+{#            </div>#}
+            <div class="form-group">
+                <label for="comment-rating" class="form-label">Рейтинг</label>
+                <input id="comment-rating" name="rating" class="form-control" type="number" min="1" max="10" step="0.1" placeholder="Введите рейтинг" aria-label="Рейтинг" required>
+            </div>
+            <div class="form-group">
+                <label for="comment-body" class="form-label">Комментарий</label>
+                <textarea id="comment-body" name="comment" class="form-control" placeholder="Введите комментарий" rows="4" aria-label="Комментарий" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Отправить</button>
+        </form>
+    </div>
+</div>
+
 
     <script>
         // Логика переключения сезонов и эпизодов
@@ -189,9 +214,23 @@
         };
         // Работа с плеером
         // Инициализация Video.js
-    const player = videojs('video-1', {
+        const player = videojs('video-1', {});
 
-    });
+
+        const button_watch = document.querySelector('.btn-watch');
+        if (button_watch) {
+            button_watch.addEventListener('click', () => {
+                // Запуск плеера
+                player.play();
+                
+                // Перевод плеера в полноэкранный режим
+                player.requestFullscreen.call(player);
+                
+            });
+        } else {
+            console.error('Кнопка .btn-watch не найдена.');
+        }
+
 
         // Добавляем обработчик для нажатий клавиш
         document.addEventListener('keydown', (event) => {

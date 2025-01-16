@@ -2,6 +2,14 @@ from django import forms
 from django.contrib.auth.forms import SetPasswordForm, PasswordResetForm, AuthenticationForm
 from django.contrib.auth.models import User
 
+from cinema.models import Reviews
+
+
+class ReviewForm(forms.ModelForm):
+    class Meta:
+        model = Reviews
+        fields = ['rating', 'comment']
+
 
 class CustomLoginForm(AuthenticationForm):
     username = forms.CharField(
