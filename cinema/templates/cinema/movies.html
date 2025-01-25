@@ -3,16 +3,23 @@
 {% load static %}
 
 
-{% block title %} {{ model_name|capfirst }} {% endblock %}
+{% block title %} 
+    {% if model_name %} {{ model_name|capfirst }} {% else %} {{ genre.name|capfirst }} {% endif %}
+{% endblock %}
 
 
 {% block content %}
-
-
+    
     <div class="container mt-5">
         <div class="movies-container">
-            <h1 >{{ model_name|capfirst }}</h1>
-            <form method="get" action="{% if model_name == 'movies' %}{% url 'search_movie' %}{% elif model_name == 'tvshows' %}{% url 'search_tvshows' %}{% elif model_name == 'cartoon' %}{% url 'search_cartoon' %}{% endif %}">
+            <div class="model-name">
+                <h1>{% if model_name == 'movies' %} Фильмы {% elif model_name == 'tvshows' %} Сериалы {% elif model_name == 'cartoon' %} Мультфильмы {% else %} {{ genre.name|capfirst }} {% endif %}</h1>
+                <div class="total">{{ total_objects }}</div>
+            </div>
+        
+
+            <form method="get" action="
+                    {% if model_name == 'movies' %}{% url 'search_movie' %}{% elif model_name == 'tvshows' %}{% url 'search_tvshows' %}{% elif model_name == 'cartoon' %}{% url 'search_cartoon' %} {% else %}{% url 'search_media' genre.name%}{% endif %}">
                 <input class="search_input" type="search" placeholder="Введите название" aria-label="Поиск" name="q">
                 <button class="search_btn" type="submit">Поиск</button>
             </form>
@@ -22,11 +29,21 @@
             {% for movie in movies %}
                 <div class="p-0 col-4 col-md-3 custom-lg-col mb-4">
                     <div class="my-card " data-id="{{ movie.id }}">
-                        <a href="{% url 'detail' model_name movie.slug movie.release_date|date:'Y' %}" class="link-title">
+                    {% if model_name %}
+                        <a href="{% url 'detail' model_name movie.slug movie.release_date|date:'Y' %}"
+                           class="link-title">
                             <div class="poster">
                                 <img src="{{ movie.poster_path }}" alt="{{ movie.title }}" class="card-img-top">
                             </div>
                         </a>
+                        {% else %}
+                        <a href="{% url 'detail' movie.model_name movie.slug movie.release_date|date:'Y' %}"
+                           class="link-title">
+                            <div class="poster">
+                                <img src="{{ movie.poster_path }}" alt="{{ movie.title }}" class="card-img-top">
+                            </div>
+                        </a>
+                    {% endif %}
                         <div class="rating {% if movie.vote_average >= 6 and movie.vote_average < 8 %} rating-medium {% endif %}
                                             {% if movie.vote_average >= 8 %} rating-high {% endif %}
                                             {% if movie.vote_average < 6 %}rating-low {% endif %}">
@@ -126,4 +143,6 @@
             </ul>
         </nav>
     </div>
+    <script src="{% static 'js/snippets.js' %}"></script>
+
 {% endblock %}

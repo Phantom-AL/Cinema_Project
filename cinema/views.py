@@ -13,6 +13,8 @@ from hdrezka import Search
 
 from .forms import RegistrationForm, ReviewForm, CustomLoginForm
 from .models import Movies, Recommendations, TvShows, Cartoon, Genres, Reviews
+from django.db.models import Value, CharField
+from django.contrib.contenttypes.models import ContentType
 
 
 def index(request):
@@ -39,8 +41,10 @@ def data_paginator(request, model):
     # Проверка наличия кеша
     # page_obj = cache.get(cache_key)
 
-    if True:  # not #page_obj:
+    if page_number:  # not #page_obj:
         data = model.objects.prefetch_related('genre')
+        total_result = len(data)
+
         paginator = Paginator(data, 25)
 
         try:
@@ -51,18 +55,43 @@ def data_paginator(request, model):
             page_obj = paginator.page(paginator.num_pages)
 
         # cache.set(cache_key, page_obj, timeout=2592000)
-
-    return page_obj
+    return page_obj, total_result
 
 
 def content_list(request, model, model_name):
-    page_obj = data_paginator(request, model)
+    page_obj, total_objects = data_paginator(request, model)
 
     return render(request, 'cinema/movies.html', context={
         'movies': page_obj.object_list,
         'page': page_obj,
         'model_name': model_name,
-     })
+        'total_objects': total_objects
+    })
+
+
+def movies_by_genre(request, genre_name):
+    page_number = request.GET.get('page', 1)
+    # Получаем жанр по имени
+    genre = get_object_or_404(Genres, name=genre_name)
+    # Фильтруем фильмы по жанру
+    movies = Movies.objects.filter(genre=genre).annotate(model_name=Value('movies', output_field=CharField()))
+    tvshows = TvShows.objects.filter(genre=genre).annotate(model_name=Value('tvshows', output_field=CharField()))
+    cartoons = TvShows.objects.filter(genre=genre).annotate(model_name=Value('cartoon', output_field=CharField()))
+
+    content = list(movies) + list(tvshows) + list(cartoons)
+    paginator = Paginator(content, 25)
+    try:
+        page_obj = paginator.page(page_number)
+    except PageNotAnInteger:
+        page_obj = paginator.page(1)
+    except EmptyPage:
+        page_obj = paginator.page(paginator.num_pages)
+    return render(request, 'cinema/movies.html', {'genre': genre,
+                                                        'movies': page_obj.object_list,
+                                                        'page': page_obj,
+                                                        'total_objects': paginator.count,
+
+                                                        })
 
 
 def movies(request):
@@ -77,43 +106,55 @@ def cartoon(request):
     return content_list(request, model=Cartoon, model_name='cartoon')
 
 
+def bookmarks(request):
+    """Страница закладок"""
+    return render(request, 'cinema/bookmarks.html')
+
+
 class BaseSearchResultView(ListView):
     template_name = 'cinema/search.html'
     model = None
 
     def get_queryset(self):
-        if self.model is None:
-            return f'model name is {self.model.__name__.lower()}'
         query = self.request.GET.get('q', '')
-
         return self.model.objects.filter(
             Q(title__icontains=query) | Q(title_en__icontains=query)
         )
 
+    def paginate_queryset(self, queryset, page_size):
+        paginator = Paginator(queryset, page_size)
+        page_number = self.request.GET.get('page', 1)
+        try:
+            return paginator.page(page_number), paginator
+        except PageNotAnInteger:
+            return paginator.page(1), paginator
+        except EmptyPage:
+            return paginator.page(paginator.num_pages), paginator
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        query = self.request.GET.get('q', '')
+        object_list = self.get_queryset()
+        page_obj, paginator = self.paginate_queryset(object_list, 25)
 
-        if not self.model:
-            context['page'] = []
-            context['object_list'] = []
-            return context
-        object_list = self.model.objects.filter(
-            Q(title__icontains=query) | Q(title_en__icontains=query)
-        )
-        paginator = Paginator(object_list, 25)
-        page_number = self.request.GET.get('page', 1)
+        genre_url = self.request.path_info
 
-        try:
-            page_obj = paginator.page(page_number)
-        except PageNotAnInteger:
-            page_obj = paginator.page(1)
-        except EmptyPage:
-            page_obj = paginator.page(paginator.num_pages)
+        genre_name = genre_url.split('/')[-2]
 
-        context['page'] = page_obj
-        context['object_list'] = object_list
-        context['model_name'] = self.model.__name__.lower()
+        if self.model:
+            context.update({
+                'page': page_obj,
+                'object_list': page_obj.object_list,
+                'total_objects': paginator.count,
+                'model_name': self.model.__name__.lower(),
+
+            })
+        else:
+            context.update({
+                'page': page_obj,
+                'object_list': page_obj.object_list,
+                'total_objects': paginator.count,
+                'genre_name': genre_name
+            })
 
         return context
 
@@ -130,8 +171,36 @@ class SearchResultsCartoonView(BaseSearchResultView):
     model = Cartoon
 
 
+class SearchResultsAllView(BaseSearchResultView):
+    def get_all_media(self, query, genre_out_url):
+        movies_queryset = Movies.objects.filter(
+            (Q(title__icontains=query) | Q(title_en__icontains=query)) & Q(genre=genre_out_url)
+        ).annotate(model_name=Value('movies', output_field=CharField()))
+        tvshows_queryset = TvShows.objects.filter(
+            (Q(title__icontains=query) | Q(title_en__icontains=query)) & Q(genre=genre_out_url)
+        ).annotate(model_name=Value('tvshows', output_field=CharField()))
+        cartoon_queryset = Cartoon.objects.filter(
+            (Q(title__icontains=query) | Q(title_en__icontains=query)) & Q(genre=genre_out_url)
+        ).annotate(model_name=Value('cartoon', output_field=CharField()))
+
+        content_lst = list(movies_queryset) + list(tvshows_queryset) + list(cartoon_queryset)
+
+        return content_lst
+
+    def get_queryset(self):
+        query = self.request.GET.get('q', '')
+
+        genre_url = self.request.path_info
+        print(genre_url)
+
+        genre_name = genre_url.split('/')[-2]
+        genre_out_url = get_object_or_404(Genres, name=genre_name)
+
+        return self.get_all_media(query, genre_out_url)
+
+
 # Асинхронная функция для загрузки данных о плеере
-async def get_player_data(slug, model_name, year, season, episode):
+async def get_player_data(slug, model_name, year, season, episode, translator_id=None):
     # Поиск по слагу
     try:
         search_results = await Search(slug).get_page(1)
@@ -166,13 +235,8 @@ async def get_player_data(slug, model_name, year, season, episode):
 
         player = await first_result.player
 
-        # Поиск переводчика с субтитрами
-        translator_id = None
-        for name, id_ in player.post.translators.name_id.items():
-            if 'субтитры' in name.casefold():
-                translator_id = id_
-                break
-        print(f' translator_id - {translator_id}')
+        if not translator_id:
+            translator_id = 238
 
         # Получение потока видео
         if model_name == 'tvshows':
@@ -185,6 +249,12 @@ async def get_player_data(slug, model_name, year, season, episode):
 
             available_seasons_list = list(available_seasons.items())
 
+        elif model_name == 'recommendations':
+            available_seasons = await player.get_episodes(translator_id)
+
+            if available_seasons:
+                stream = await player.get_stream(int(season), int(episode), translator_id)
+                available_seasons_list = list(available_seasons.items())
         else:
             stream = await player.get_stream(translator_id)
             available_seasons_list = None
@@ -201,18 +271,19 @@ async def get_player_data(slug, model_name, year, season, episode):
         }
 
         video_urls = {
-            'best_quality': await stream.video.last_url,
+            # 'best_quality': await stream.video.last_url,
             'url_360p': stream.video[360].raw_data.get('360p'),
-            'url_480p': stream.video[480].raw_data.get('480p'),
-            'url_720p': stream.video[720].raw_data.get('720p'),
+            # 'url_480p': stream.video[480].raw_data.get('480p'),
+            # 'url_720p': stream.video[720].raw_data.get('720p'),
             'url_1080p': stream.video[1080].raw_data.get('1080p'),
-            'url_1080p_Ultra': stream.video[1080]['ultra'].raw_data.get('1080p Ultra'),
+            # 'url_1080p_Ultra': stream.video[1080]['ultra'].raw_data.get('1080p Ultra'),
         }
 
         return {
             'video_urls': video_urls,
             'subtitles_url': subtitles_urls,
             'available_seasons_list': available_seasons_list,
+            'translators': list(player.post.translators.name_id.items())
         }
 
     except TimeoutError:
@@ -248,11 +319,12 @@ def detail(request, model_name, slug, year, season=None, episode=None):
     # Получение существующего или создание нового цикла
     loop = get_or_create_event_loop()
 
+    translator_id = request.GET.get('translator_id', '238')
     season = int(request.GET.get('season', season) or 1)  # Используем сезон 1 по умолчанию
     episode = int(request.GET.get('episode', episode) or 1)  # Используем эпизод 1 по умолчанию
 
     # Асинхронный вызов функции
-    player_data = loop.run_until_complete(get_player_data(slug, model_name, year, season, episode))
+    player_data = loop.run_until_complete(get_player_data(slug, model_name, year, season, episode, translator_id))
 
     # Обработка формы отзыва
     if request.method == 'POST':
@@ -262,6 +334,11 @@ def detail(request, model_name, slug, year, season=None, episode=None):
                 review = form.save(commit=False)
                 review.user = request.user
                 review.poster = media.poster_path
+
+                content_type = ContentType.objects.get_for_model(media)
+                review.content_type = content_type
+                review.object_id = media.id
+                review.model_name = model_name
                 review.save()
                 return redirect(request.path)
         else:
@@ -270,6 +347,7 @@ def detail(request, model_name, slug, year, season=None, episode=None):
     context = {
         'media': media,
         'player_data': player_data,
+        'current_translator_id': translator_id,
     }
 
     return render(request, 'cinema/detail.html', context)
@@ -317,16 +395,6 @@ def genre(request):
         cache.set('genres_data', genres_data, timeout=2592000)
     # Если genres_data пустое, то вернется пустая страница (можно изменить на другую страницу, если нужно)
     return render(request, 'cinema/genre.html', {'genres_data': genres_data})
-
-
-def genre_detail(request):
-    # Получаем все жанры с предварительным выбором нужных данных
-    genres = Genres.objects.all()
-
-    # Получаем все фильмы, сериалы и мультфильмы с предварительной загрузкой жанров
-    movies = Movies.objects.prefetch_related('genre')
-    tv_shows = TvShows.objects.prefetch_related('genre')
-    cartoons = Cartoon.objects.prefetch_related('genre')
 
 
 def signup(request):

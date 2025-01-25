@@ -11,14 +11,8 @@
 {% block content %}
     <section>
         <div class="breaking-bad_section">
-            <img class="img-fluid" src="{% static 'img/breaking-bad.jpg' %}" alt="breaking-bad">
-            <div class="image-text">
-                <h1>Откройте мир кино с нами!</h1>
-                <p>Добавляйте фильмы и сериалы в свои списки, следите за обновлениями и находите новые шедевры.
-                </p>
-                <p>Оценивайте, оставляйте отзывы и делитесь своим мнением с друзьями. Ваша личная библиотека лучших
-                    фильмов!</p>
-            </div>
+            <img class="img-fluid" src="{% static 'img/background_image.jpg' %}" alt="breaking-bad">
+            
         </div>
     </section>
 
@@ -109,7 +103,7 @@
                     <div class="card">
                         <div class="row g-0">
                             <div class="col-4">
-                                <a href="https://google.com" class="link-title">
+                                <a href="{% url 'detail' review.model_name review.content_model.slug review.content_model.release_date|date:'Y'%}" class="link-title">
                                 <div class="poster">
                                     <img src="{{ review.poster }}" class="img-fluid rounded-start"
                                      alt="#">
@@ -124,7 +118,7 @@
                                             {% if review.rating >= 8 %} rating-high {% endif %}
                                             {% if review.rating < 6 %}rating-low {% endif %}"><i class="fa-solid fa-star"></i> {{ review.rating }}</p>
                                     <p class="card-text">{{ review.comment }}</p>
-                                    <a href="#" class="card-button" 
+                                    <a href="#" class="card-button"
                                        
                                        data-bs-toggle="modal"
                                        data-bs-target="#exampleModal"
@@ -138,6 +132,7 @@
                                        
                                     <p class="card-text"><small>{{ review.date_publish }}</small></p>
                                 </div>
+                                
                             </div>
                         </div>
                     </div>

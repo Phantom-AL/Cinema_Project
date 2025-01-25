@@ -10,18 +10,20 @@
         <img class="background" src="{{ media.backdrop_path }}" alt="{{ media.title }}">
         <div class="background-overlay"></div> <!-- Затемнение фона -->
     </div>
-
+    
+    
+    
     <div class="container">
         <div class="content">
             <h1>{{ media.title }}</h1>
             <div class="info">
                 <div class="rating-imdb {% if media.vote_average >= 8 %}
-                                            rating-imdb-high
-                                        {% elif media.vote_average >= 6 %}
-                                            rating-imdb-medium
-                                        {% else %}
-                                            rating-imdb-low
-                                        {% endif %}">
+                                                rating-imdb-high
+                                            {% elif media.vote_average >= 6 %}
+                                                rating-imdb-medium
+                                            {% else %}
+                                                rating-imdb-low
+                                            {% endif %}">
                     <div class="imdb-logo"></div>
                     <span class="rating-score">{{ media.vote_average }}</span>
                 </div>
@@ -30,8 +32,8 @@
 
                 {% if media.number_of_seasons %}
                     <span>
-                       {{ media.number_of_seasons|pluralize_season }}
-                    </span>
+                           {{ media.number_of_seasons|pluralize_season }}
+                        </span>
                 {% endif %}
 
             </div>
@@ -43,7 +45,7 @@
             <p class="overview">{{ media.overview }}</p>
             <script>
                 document.addEventListener("DOMContentLoaded", function () {
-                    truncateText('.overview', 300);
+                    truncateText('.overview', 450);
                 });
             </script>
             <div class="watch">
@@ -75,11 +77,31 @@
         {% endfor %}
     </div>
 
+    <div class="translators-dropdown text-white text-center ">
+        <label class="label-translators" for="translators">Выберите перевод:</label>
+        <select id="translators">
+            <!-- "Оригинал" -->
+            <option value="238" {% if current_translator_id == "238" %}selected{% endif %}>Оригинал</option>
 
-    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
-    <!-- Подключение плагина качества -->
-    <script src="https://cdn.jsdelivr.net/npm/@videojs/http-streaming/dist/videojs-http-streaming.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector/dist/videojs-hls-quality-selector.min.js"></script>
+            <!-- Остальные переводы -->
+            {% for name, id in player_data.translators %}
+                {% if id != 238 %}
+               
+                    <option value="{{ id }}"
+                            {% if id|stringformat:"s" == current_translator_id|stringformat:"s" %}selected{% endif %}>
+                        {{ name }}
+                    </option>
+
+                {% endif %}
+            {% endfor %}
+        </select>
+    </div>
+
+
+
+   
+
+
 
     <div id="player-1" class="video" style="position: relative;">
         <video
@@ -95,13 +117,14 @@
             <track src="{{ player_data.subtitles_url.russian_sub }}" kind="subtitles" srclang="ru" label="Русский">
             <track src="{{ player_data.subtitles_url.english_sub }}" kind="subtitles" srclang="en" label="English">
 
-            <source src="{{ player_data.video_urls.url_1080p }}" type="application/vnd.apple.mpegurl" data-res="1080p">
 
-            {% comment %}<source src="{{ player_data.video_urls.url_720p }}" type="application/vnd.apple.mpegurl" data-res="720p">
             <source src="{{ player_data.video_urls.url_360p }}" type="application/vnd.apple.mpegurl" data-res="360p">
-            <source src="{{ player_data.video_urls.url_480p }}" type="application/vnd.apple.mpegurl" data-res="480p">
-            <source src="{{ player_data.video_urls.url_1080p_Ultra }}" type="application/vnd.apple.mpegurl"
-                    data-res="1080p_Ultra">{% endcomment %}
+            <source src="{{ player_data.video_urls.url_1080p }}" type="application/vnd.apple.mpegurl" data-res="1080p">
+            {% comment %}<source src="{{ player_data.video_urls.url_720p }}" type="application/vnd.apple.mpegurl" data-res="720p">
+
+                <source src="{{ player_data.video_urls.url_480p }}" type="application/vnd.apple.mpegurl" data-res="480p">
+                <source src="{{ player_data.video_urls.url_1080p_Ultra }}" type="application/vnd.apple.mpegurl"
+                        data-res="1080p_Ultra">{% endcomment %}
             <p class="vjs-no-js">
                 To view this video please enable JavaScript, and consider upgrading to a
                 web browser that
@@ -130,137 +153,31 @@
     </div>
 
     <h3 class="comment-title">Прокомментировать </h3>
-<div class="form-review-container">
-    <div class="form-review">
-        <form action="" method="post">
-            {% csrf_token %}
-{#            <div class="form-group">#}
-{#                <label for="comment-username" class="form-label">Имя пользователя</label>#}
-{#                <input id="comment-username" name="username" class="form-control" type="text" placeholder="Введите имя" aria-label="Имя пользователя" required>#}
-{#            </div>#}
-            <div class="form-group">
-                <label for="comment-rating" class="form-label">Рейтинг</label>
-                <input id="comment-rating" name="rating" class="form-control" type="number" min="1" max="10" step="0.1" placeholder="Введите рейтинг" aria-label="Рейтинг" required>
-            </div>
-            <div class="form-group">
-                <label for="comment-body" class="form-label">Комментарий</label>
-                <textarea id="comment-body" name="comment" class="form-control" placeholder="Введите комментарий" rows="4" aria-label="Комментарий" required></textarea>
-            </div>
-            <button type="submit" class="btn-submit">Отправить</button>
-        </form>
+    <div class="form-review-container">
+        <div class="form-review">
+            <form method="post">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="comment-rating" class="form-label">Рейтинг</label>
+                    <input id="comment-rating" name="rating" class="form-control" type="number" min="1" max="10"
+                           step="0.1" placeholder="Введите рейтинг" aria-label="Рейтинг" required>
+                </div>
+                <div class="form-group">
+                    <label for="comment-body" class="form-label">Комментарий</label>
+                    <textarea id="comment-body" name="comment" class="form-control" placeholder="Введите комментарий"
+                              rows="4" aria-label="Комментарий" required></textarea>
+                </div>
+                <button type="submit" class="btn-submit">Отправить</button>
+            </form>
+        </div>
     </div>
-</div>
 
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <!-- Подключение плагина качества -->
+    {% comment %}<script src="https://cdn.jsdelivr.net/npm/@videojs/http-streaming/dist/videojs-http-streaming.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/videojs-hls-quality-selector/dist/videojs-hls-quality-selector.min.js"></script>{% endcomment %}
 
-    <script>
-        // Логика переключения сезонов и эпизодов
-        document.querySelectorAll('.season-btn').forEach(button => {
-            button.addEventListener('click', () => {
-                const seasonId = button.getAttribute('data-season');
-
-                // Удалить класс active у всех кнопок сезонов
-                document.querySelectorAll('.season-btn').forEach(btn => btn.classList.remove('active'));
-
-                // Добавить класс active к выбранной кнопке
-                button.classList.add('active');
-
-                // Скрыть все эпизоды
-                document.querySelectorAll('.episodes').forEach(epContainer => {
-                    epContainer.style.display = 'none';
-                });
-
-                // Показать эпизоды выбранного сезона
-                document.getElementById(`season-episodes-${seasonId}`).style.display = 'flex';
-            });
-        });
-
-        // Функция загрузки эпизода
-        function loadEpisode(season, episode) {
-            const url = new URL(window.location.href);
-            url.searchParams.set('season', season); // Добавляем параметр сезона
-            url.searchParams.set('episode', episode); // Добавляем параметр эпизода
-            window.location.href = url.toString(); // Перезагружаем страницу с обновленным URL
-        }
-
-        // Автоматическая активация сезона и эпизода при загрузке страницы
-        window.onload = () => {
-            const urlParams = new URLSearchParams(window.location.search);
-            const season = urlParams.get('season');
-            const episode = urlParams.get('episode');
-
-            // Если в URL есть параметры для сезона и эпизода, восстанавливаем их
-            if (season) {
-                // Активируем правильный сезон
-                const seasonButton = document.querySelector(`.season-btn[data-season="${season}"]`);
-                if (seasonButton) {
-                    seasonButton.classList.add('active');
-                    document.querySelectorAll('.episodes').forEach(epContainer => {
-                        epContainer.style.display = 'none';
-                    });
-                    document.getElementById(`season-episodes-${season}`).style.display = 'flex';
-                }
-            }
-
-            if (episode) {
-                // Активируем правильный эпизод
-                const seasonEpisodes = document.getElementById(`season-episodes-${season}`);
-                if (seasonEpisodes) {
-                    const episodeButton = seasonEpisodes.querySelector(`.episode-btn:nth-child(${episode})`);
-                    if (episodeButton) {
-                        episodeButton.classList.add('active'); // Добавляем класс active к эпизоду
-                    }
-                }
-            }
-        };
-        // Работа с плеером
-        // Инициализация Video.js
-        const player = videojs('video-1', {});
-
-
-        const button_watch = document.querySelector('.btn-watch');
-        if (button_watch) {
-            button_watch.addEventListener('click', () => {
-                // Запуск плеера
-                player.play();
-                
-                // Перевод плеера в полноэкранный режим
-                player.requestFullscreen.call(player);
-                
-            });
-        } else {
-            console.error('Кнопка .btn-watch не найдена.');
-        }
-
-
-        // Добавляем обработчик для нажатий клавиш
-        document.addEventListener('keydown', (event) => {
-            // Доступ к текущему времени видео
-            const currentTime = player.currentTime();
-            const skipStep = 5; // Шаг перемотки в секундах
-
-            switch (event.code) {
-                case 'ArrowRight': // Перемотка вперед
-                    player.currentTime(currentTime + skipStep);
-                    break;
-                case 'ArrowLeft': // Перемотка назад
-                    player.currentTime(Math.max(0, currentTime - skipStep)); // Не меньше 0
-                    break;
-                case 'Space':
-                    if (player.paused()) {
-                        player.play();
-                    } else {
-                        player.pause();
-                    }
-                    break;
-                default:
-                    break;
-            }
-        });
-
-
-    </script>
-
-
+    <script src="{% static 'js/player_customize.js' %}"></script>
 
 
 {% endblock %}

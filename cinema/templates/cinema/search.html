@@ -12,14 +12,20 @@
 
     <div class="container mt-5">
         <div class="movies-container">
+        <div class="model-name">
             <h1 >Результат</h1>
+            <div class="total">{{ total_objects }}</div>
+        </div>
             <form method="get" 
-                    {% if model_name == 'movie' %} 
+                    {% if model_name == 'movies' %} 
                         action="{% url 'search_movie' %}"
                     {% elif model_name == 'tvshows' %} 
                         action="{% url 'search_tvshows' %}"
                     {% elif model_name == 'cartoon' %}
                         action="{% url 'search_cartoon' %}"
+                    {% else %}
+                        action="{% url 'search_media' genre_name%}"
+
                     {% endif %}>
         
                 <input class="search_input" type="search" placeholder="Введите название" aria-label="Поиск" name="q">
@@ -31,11 +37,21 @@
             {% for movie in page.object_list %}
                 <div class="p-0 col-4 col-md-3 custom-lg-col mb-4">
                     <div class="my-card " data-id="{{ movie.id }}">
-                        <a href="{% url 'detail' model_name movie.slug movie.release_date|date:'Y' %}" class="link-title">
+                    
+                        {% if genre_name %}
+                        <a href="{% url 'detail'  movie.model_name movie.slug movie.release_date|date:'Y' %}" class="link-title">
                             <div class="poster">
                                 <img src="{{ movie.poster_path }}" alt="{{ movie.title }}" class="card-img-top">
                             </div>
                         </a>
+                        {% else %}
+                            <a href="{% url 'detail'  model_name movie.slug movie.release_date|date:'Y' %}" class="link-title">
+                            <div class="poster">
+                                <img src="{{ movie.poster_path }}" alt="{{ movie.title }}" class="card-img-top">
+                            </div>
+                        </a>
+                        {% endif %}
+                        
                         <div class="rating {% if movie.vote_average >= 6 and movie.vote_average < 8 %} rating-medium {% endif %}
                                             {% if movie.vote_average >= 8 %} rating-high {% endif %}
                                             {% if movie.vote_average < 6 %}rating-low {% endif %}">

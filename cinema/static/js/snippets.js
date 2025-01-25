@@ -1,4 +1,25 @@
 
+document.addEventListener('DOMContentLoaded', function () {
+    const avatar = document.getElementById("avatar");
+    const dropdownMenu = document.getElementById("dropdown-menu");
+
+    avatar.addEventListener("click", (event) => {
+        dropdownMenu.classList.toggle("show");
+        event.stopPropagation(); // Предотвращаем всплытие события
+    });
+
+    document.addEventListener("click", (event) => {
+        if (!dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.remove("show");
+        }
+    });
+});
+
+
+
+
+
+
 const localStorageKey = userId !== "null" ? `bookmarks_${userId}` : null;
 
 // Функция для сохранения состояния закладок
@@ -62,9 +83,6 @@ document.addEventListener('DOMContentLoaded', loadBookmarks);
 
 
 
-
-
-
 swiper = initializeSwiper();
 // Модальное окно
 let exampleModal = document.getElementById('exampleModal');
@@ -111,4 +129,6 @@ function truncateText(selector, maxLength) {
 
 // Применяем к вашему блоку
 truncateText('.overview', 300);
+
+
 

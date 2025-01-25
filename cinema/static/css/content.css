@@ -6,6 +6,8 @@ body {
     background-color: #212529;
 }
 
+
+
 /* Футер фиксирован внизу */
 .my-footer {
     margin-top: auto;
@@ -13,6 +15,10 @@ body {
 
 .movies-container h1 {
     color: #fff;
+}
+
+.genre-title {
+    margin-bottom: 8vh;
 }
 
 .movies-container {
@@ -32,6 +38,7 @@ body {
     border-radius: 10px;
     border: 0;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    font-size: 18px;
 
 
 }
@@ -39,14 +46,14 @@ body {
 
 
 .movies-container .search_btn:hover {
-    background-color: #d4b546; /* Светлее основного (золотисто-желтый) */
     box-shadow: 0 0 15px rgba(203, 168, 21, 0.6), 0 0 10px rgba(203, 168, 21, 0.4);
+    background-color: #cba815;
 
 }
 
 .movies-container .search_input {
     width: 350px;
-    padding: 10px;
+    padding: 12px 14px;
     margin-right: 10px;
     border-radius: 10px;
     background-color: #212529;
@@ -358,24 +365,25 @@ body {
 
 
 
-
+/* detail page */
 
 .background-container {
     position: relative; /* Контейнер будет в обычном потоке */
-    width: 100%;
-    height: 100vh; /* Высота равна высоте окна браузера */
+
+    height: auto; /* Высота равна высоте окна браузера */
     overflow: hidden; /* Скроет излишки изображения */
     z-index: -1; /* Фон ниже контента */
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
 }
 
 .background {
-    position: absolute; /* Изображение внутри контейнера */
+    /* Убираем абсолютное позиционирование */
     width: 100%;
     height: auto;
     /*height: 100%;*/
     /*object-fit: cover;  Фон полностью заполняет контейнер */
 }
+
 
 .background-overlay {
     position: absolute;
@@ -401,6 +409,15 @@ body {
     z-index: 2;
 
 }
+
+@media (max-width: 1200px) {
+    .content h1 {
+        font-size: 2rem;
+    };
+}
+
+
+
 
 .watch {
     display: flex;
@@ -619,8 +636,8 @@ body {
     justify-content: center;
     align-items: center;
     height: 100%; /* Высота контейнера */
-    margin-top: 20px; /* Отступ сверху */
-    margin-bottom: 20px; /* Отступ сверху */
+    margin-top: 3vh; /* Отступ сверху */
+    margin-bottom: 12vh; /* Отступ сверху */
 }
 
 .form-review {
@@ -690,3 +707,193 @@ textarea.form-control {
     background-color: #e4b816; /* Темнее при наведении */
     box-shadow: 0px 4px 12px rgba(176, 147, 19, 0.5); /* Легкая тень при наведении */
 }
+
+
+.model-name {
+    display: flex;
+    align-items: center; /* Выровняет элементы по вертикали */
+    justify-content: space-between;
+}
+
+.total {
+    color: #cba815;
+    font-size: 28px;
+    margin-left: 10px;
+    font-weight: bold;
+}
+
+
+
+/* detail плеер  */
+
+
+
+.label-translators {
+    margin-right: 10px;
+    color: #cba815;
+    font-size: 22px;
+}
+
+.translators-dropdown {
+    margin-bottom: 2rem;
+}
+
+.translators-dropdown select {
+    background-color: #212529;
+    color: white;
+    border-radius: 5px;
+    padding: 5px 2px;
+}
+
+.translators-dropdown select:focus {
+    scale: 0.95;
+}
+
+.filter-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  background-color: #2a2a2a;
+  padding: 10px;
+  border-radius: 8px;
+  width: 200px;
+}
+
+.filter-item {
+  position: relative;
+}
+
+.filter-button {
+  background-color: #333;
+  color: #fff;
+  padding: 10px;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.filter-button:hover {
+  background-color: #444;
+}
+
+
+
+
+
+/* Общий стиль для меню */
+.profile-menu {
+    position: relative;
+    display: inline-block;
+}
+
+/* Аватарка */
+.avatar {
+    border-radius: 50%;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+/* Увеличение аватарки при наведении */
+.avatar:hover {
+    transform: scale(1.05);
+}
+
+/* Выпадающее меню (скрыто по умолчанию) */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 300px;
+    background-color: #2c2c3e;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    overflow: hidden;
+    z-index: 3;
+}
+
+/* Заголовок профиля */
+.profile-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background-color: #3a3a4d;
+    border-bottom: 1px solid #454552;
+}
+
+.profile-avatar {
+
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.profile-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.username {
+    font-weight: bold;
+    font-size: 16px;
+    color: #ffffff;
+}
+
+.email {
+    font-size: 12px;
+    color: #c2c2c2;
+}
+
+/* Стили пунктов меню */
+.menu-item {
+    display: flex;
+    align-items: center;
+    padding: 12px 15px;
+    font-size: 14px;
+    text-decoration: none;
+    color: #ffffff;
+    background-color: #2c2c3e;
+    transition: background-color 0.2s ease;
+}
+
+.menu-item span {
+    margin-right: 10px;
+    font-size: 16px;
+}
+
+.menu-item:hover {
+    background-color: #454552;
+}
+
+/* Кнопка выхода */
+.logout-form {
+    margin: 0;
+}
+
+.logout {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    padding: 12px 15px;
+    text-decoration: none;
+    font-size: 14px;
+    color: #ffffff;
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+.logout:hover {
+    background-color: #ff4d4d;
+    color: #ffffff;
+}
+
+/* Видимое состояние меню */
+.dropdown-menu.show {
+    display: block;
+
+}
+
+

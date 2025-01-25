@@ -5,7 +5,12 @@
 .header-logo, .footer-logo {
     width: 100px; /* Измени значение на подходящее */
     height: auto; /* Автоматическая высота для сохранения пропорций */
+    transition: transform 0.3s ease;
 
+}
+
+.header-logo:hover, .footer-logo:hover {
+    transform: scale(1.05);
 }
 
 
@@ -41,12 +46,20 @@
 .login-button, .register-button {
     color: #fff;
     text-decoration: none;
-    border-radius: 20px;
-    padding: 12px 24px;
+    border-radius: 15px;
+    padding: 10px 20px;
     background-color: #cba815;
     font-size: 1.1rem;
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 
+}
+
+.login-button {
+    padding: 10px 30px;
+}
+
+.register-button {
+    background-color: #3C3C3C;
 }
 
 .login-button:hover {
@@ -55,13 +68,9 @@
 
 }
 
-.register-button {
-    background-color: #3C3C3C;
-}
-
 .register-button:hover {
     background-color: #555555;
-    color: #e1e1e1;
+    box-shadow: 0 0 15px rgba(173, 216, 230, 0.4), 0 0 10px rgba(0, 0, 0, 0.6);
 }
 
 
@@ -115,6 +124,14 @@
 /* Ссылки в шапке */
 
 
+.navbar-index {
+    position: absolute;
+    z-index: 2;
+    width: 100%;
+}
+
+
+
 .nav-link {
     font-weight: 500;
     color: #d1d1d1;
@@ -163,7 +180,7 @@
     outline: none;
 }
 
-.detail-page .navbar {
+.detail-page  .navbar{
     background: transparent !important;
     position: absolute;
     width: 100%;
@@ -189,32 +206,17 @@
 .breaking-bad_section img {
     object-fit: cover;
     width: 100%;
+    
 
 }
 
 /* Работа с текстом */
 
-.image-text {
-    position: absolute; /* Абсолютное позиционирование текста */
-    top: 10%;
-    left: 58%;
-    color: #d1d1d1;
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7); /* Тень для улучшения читаемости */
-    max-width: 100%;
-}
-
-.image-text h1 {
-    font-size: 1.84rem;
-    margin-bottom: 15px;
-}
 
 .my_swiper h2 {
     font-size: 1.84rem;
 }
 
-.image-text p {
-    font-size: 1.2rem;
-}
 
 
 .reviews h2 {

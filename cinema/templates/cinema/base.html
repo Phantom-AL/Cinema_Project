@@ -10,7 +10,7 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet">
 
     <link href="https://vjs.zencdn.net/8.0.4/video-js.css" rel="stylesheet">
-<script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
+    <script src="https://vjs.zencdn.net/8.0.4/video.min.js"></script>
 
 
     <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
@@ -19,15 +19,16 @@
 
     {% block link %}{% endblock %}
 </head>
+
 <body class="{% block body_class %}{% endblock %}">
 
 <header>
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container-fluid">
+    <nav class="navbar navbar-expand-lg navbar-dark {% if request.path == '/' %} navbar-index {% endif %} ">
+        <div class="container">
             <a class="navbar-brand py-3 me-auto" href="{% url 'index' %}"> <img class="header-logo"
-                                                                               src="{% static 'img/header-logo.png' %}"
-                                                                               alt="logo"> </a>
+                                                                                src="{% static 'img/header-logo.png' %}"
+                                                                                alt="logo"> </a>
 
             <div class="offcanvas offcanvas-end text-bg-dark" tabindex="-1" id="offcanvasDarkNavbar"
                  aria-labelledby="offcanvasDarkNavbarLabel">
@@ -41,33 +42,71 @@
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-center flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a class="nav-link {% if '/' == request.path or '/recommendations' in request.path %} active{% endif %} mx-md-2" href="{% url 'index' %}">Главная</a>
+                            <a class="nav-link {% if '/' == request.path or '/recommendations' in request.path %} active{% endif %} mx-md-2"
+                               href="{% url 'index' %}">Главная</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if '/movies' in request.path %}active{% endif %} mx-md-2"  href="{% url 'movies' %}"
-                               >Фильмы</a>
+                            <a class="nav-link {% if '/movies' in request.path %}active{% endif %} mx-md-2"
+                               href="{% url 'movies' %}"
+                            >Фильмы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if '/tvshows' in request.path %}active{% endif %} mx-md-2" href="{% url 'serials' %}"
-                               >Сериалы</a>
+                            <a class="nav-link {% if '/tvshows' in request.path %}active{% endif %} mx-md-2"
+                               href="{% url 'serials' %}"
+                            >Сериалы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if '/cartoon' in request.path %}active{% endif %} mx-md-2" href="{% url 'cartoon' %}"
-                               >Мультфильмы</a>
+                            <a class="nav-link {% if '/cartoon' in request.path %}active{% endif %} mx-md-2"
+                               href="{% url 'cartoon' %}"
+                            >Мультфильмы</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link {% if '/genre' in request.path %}active{% endif %} mx-md-2" href="{% url 'genre' %}">Жанры</a>
+                            <a class="nav-link {% if '/genre' in request.path %}active{% endif %} mx-md-2"
+                               href="{% url 'genre' %}">Жанры</a>
                         </li>
                     </ul>
                 </div>
             </div>
 
-            {% if user.is_authenticated %}
-                <form method="POST" action="{% url 'logout' %}">
-                    {% csrf_token %}
-                    <button type="submit" class="login-button">Выйти</button>
-                </form>
 
+            {% if user.is_authenticated %}
+                <div class="profile-menu">
+                    <!-- Аватарка -->
+                    <div class="avatar-label">
+                        <img src="{% static 'img/logo-login.png' %}" alt="Avatar" class="avatar" id="avatar">
+                    </div>
+
+                    <!-- Выпадающее меню -->
+                    <div class="dropdown-menu" id="dropdown-menu">
+                        <div class="profile-header">
+                            <img src="{% static 'img/logo-login.png' %}" alt="Avatar" class="profile-avatar">
+                            <div class="profile-info">
+                                <span class="username">{{ user.username }}</span>
+                                <span class="email">{{ user.email }}</span>
+                            </div>
+                        </div>
+                        <a href="{% url 'bookmarks' %}" class="menu-item"><span>🔖</span> Мои закладки</a>
+                        <form method="POST" action="{% url 'logout' %}">
+                            {% csrf_token %}
+                            <button type="submit" class="menu-item logout"><span>❌</span> Выйти из аккаунта</button>
+                        </form>
+                    </div>
+                </div>
+
+
+                {% comment %}<div class="dropdown login-logo">
+                    <button class="dropdown-toggle" type="button" id="dropdownMenuButton2" data-bs-toggle="dropdown"
+                            aria-expanded="false"><img src="{% static 'img/logo-login.png' %}" alt=""></button>
+                    <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="dropdownMenuButton2">
+                        <li><a class="dropdown-item" href="{% url 'bookmarks' %}">Мои закладки</a></li>
+                        <li>
+                            <hr class="dropdown-divider">
+                        </li>
+                        <li><a class="dropdown-item" type="submit" href="{% url 'logout' %}">Выйти из аккаунта</a></li>
+
+                    </ul>
+
+                </div>{% endcomment %}
             {% else %}
                 <div>
                     <a class="login-button" href="{% url 'login' %}">Войти</a>
@@ -94,7 +133,7 @@
 </main>
 
 <footer class="my-footer bg-dark">
-    <div class="container-fluid text-center ">
+    <div class="container text-center ">
         <div class="row align-items-center">
             <div class="col-12 col-sm py-3 me-auto">
                 <a href="#"><img class="footer-logo" src="{% static 'img/header-logo.png' %}"
@@ -108,7 +147,8 @@
                 <a href="#"><i class="fa-brands fa-telegram"></i></a>
             </div>
             <div class="col-2 col-sm">
-                <a href="https://www.instagram.com/denya_poberezhets/profilecard/?igsh=cDhvYmlheHE3YWUx"><i class="fa-brands fa-instagram"></i></a>
+                <a href="https://www.instagram.com/denya_poberezhets/profilecard/?igsh=cDhvYmlheHE3YWUx"><i
+                        class="fa-brands fa-instagram"></i></a>
             </div>
             <div class="col-2 col-sm">
                 <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
