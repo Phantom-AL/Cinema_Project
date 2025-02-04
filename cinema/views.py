@@ -2,9 +2,11 @@ import asyncio
 
 from django.contrib.auth import login, logout
 from django.contrib.auth.views import LoginView
+from django.contrib.contenttypes.models import ContentType
 from django.core.cache import cache
 from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
-from django.db.models import Q
+from django.db.models import Q, Prefetch
+from django.db.models import Value, CharField
 from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
@@ -13,8 +15,6 @@ from hdrezka import Search
 
 from .forms import RegistrationForm, ReviewForm, CustomLoginForm
 from .models import Movies, Recommendations, TvShows, Cartoon, Genres, Reviews
-from django.db.models import Value, CharField
-from django.contrib.contenttypes.models import ContentType
 
 
 def index(request):
@@ -36,12 +36,14 @@ def index(request):
 
 def data_paginator(request, model):
     page_number = request.GET.get('page', 1)
-    # cache_key = f'{model.__name__}_page_{page_number}'  # Уникальный ключ для кеша на основе модели и страницы
 
-    # Проверка наличия кеша
-    # page_obj = cache.get(cache_key)
+    cache_key = f'{model.__name__}_page_{page_number}'
+    cache_total_key = f'{model.__name__}_total_results'
 
-    if page_number:  # not #page_obj:
+    total_result = cache.get(cache_total_key)
+    page_obj = cache.get(cache_key)
+
+    if not page_obj or not total_result:  # not #page_obj:
         data = model.objects.prefetch_related('genre')
         total_result = len(data)
 
@@ -54,7 +56,8 @@ def data_paginator(request, model):
         except EmptyPage:
             page_obj = paginator.page(paginator.num_pages)
 
-        # cache.set(cache_key, page_obj, timeout=2592000)
+        cache.set(cache_key, page_obj, timeout=2592000)
+        cache.set(cache_total_key, total_result, timeout=2592000)
     return page_obj, total_result
 
 
@@ -71,12 +74,31 @@ def content_list(request, model, model_name):
 
 def movies_by_genre(request, genre_name):
     page_number = request.GET.get('page', 1)
+
+    # Ключ для кеша (включая `genre_name` и `page_number`)
+    cache_key = f"movies_by_genre_{genre_name}_page_{page_number}"
+    cached_data = cache.get(cache_key)
+
+    # Если есть кешированные данные, возвращаем их
+    if cached_data:
+        return cached_data
+
     # Получаем жанр по имени
     genre = get_object_or_404(Genres, name=genre_name)
-    # Фильтруем фильмы по жанру
-    movies = Movies.objects.filter(genre=genre).annotate(model_name=Value('movies', output_field=CharField()))
-    tvshows = TvShows.objects.filter(genre=genre).annotate(model_name=Value('tvshows', output_field=CharField()))
-    cartoons = TvShows.objects.filter(genre=genre).annotate(model_name=Value('cartoon', output_field=CharField()))
+
+    # Используем `Prefetch` для предварительной загрузки жанров
+    genre_prefetch = Prefetch('genre', queryset=Genres.objects.filter(id=genre.id))
+
+    # Оптимизируем запросы для фильмов, сериалов и мультфильмов
+    movies = Movies.objects.prefetch_related(genre_prefetch).filter(genre=genre).annotate(
+        model_name=Value('movies', output_field=CharField())
+    )
+    tvshows = TvShows.objects.prefetch_related(genre_prefetch).filter(genre=genre).annotate(
+        model_name=Value('tvshows', output_field=CharField())
+    )
+    cartoons = Cartoon.objects.prefetch_related(genre_prefetch).filter(genre=genre).annotate(
+        model_name=Value('cartoon', output_field=CharField())
+    )
 
     content = list(movies) + list(tvshows) + list(cartoons)
     paginator = Paginator(content, 25)
@@ -86,12 +108,23 @@ def movies_by_genre(request, genre_name):
         page_obj = paginator.page(1)
     except EmptyPage:
         page_obj = paginator.page(paginator.num_pages)
-    return render(request, 'cinema/movies.html', {'genre': genre,
-                                                        'movies': page_obj.object_list,
-                                                        'page': page_obj,
-                                                        'total_objects': paginator.count,
 
-                                                        })
+    # Собираем данные для кеша
+    response_data = render(
+        request,
+        'cinema/movies.html',
+        {
+            'genre': genre,
+            'movies': page_obj.object_list,
+            'page': page_obj,
+            'total_objects': paginator.count,
+        }
+    )
+
+    # Кешируем результат
+    cache.set(cache_key, response_data, timeout=2592000)  # 30 дней
+
+    return response_data
 
 
 def movies(request):
@@ -119,7 +152,7 @@ class BaseSearchResultView(ListView):
         query = self.request.GET.get('q', '')
         return self.model.objects.filter(
             Q(title__icontains=query) | Q(title_en__icontains=query)
-        )
+        ).prefetch_related('genre')
 
     def paginate_queryset(self, queryset, page_size):
         paginator = Paginator(queryset, page_size)
@@ -173,13 +206,13 @@ class SearchResultsCartoonView(BaseSearchResultView):
 
 class SearchResultsAllView(BaseSearchResultView):
     def get_all_media(self, query, genre_out_url):
-        movies_queryset = Movies.objects.filter(
+        movies_queryset = Movies.objects.prefetch_related('genre').filter(
             (Q(title__icontains=query) | Q(title_en__icontains=query)) & Q(genre=genre_out_url)
         ).annotate(model_name=Value('movies', output_field=CharField()))
-        tvshows_queryset = TvShows.objects.filter(
+        tvshows_queryset = TvShows.objects.prefetch_related('genre').filter(
             (Q(title__icontains=query) | Q(title_en__icontains=query)) & Q(genre=genre_out_url)
         ).annotate(model_name=Value('tvshows', output_field=CharField()))
-        cartoon_queryset = Cartoon.objects.filter(
+        cartoon_queryset = Cartoon.objects.prefetch_related('genre').filter(
             (Q(title__icontains=query) | Q(title_en__icontains=query)) & Q(genre=genre_out_url)
         ).annotate(model_name=Value('cartoon', output_field=CharField()))
 
@@ -354,46 +387,40 @@ def detail(request, model_name, slug, year, season=None, episode=None):
 
 
 def genre(request):
-    # Проверяем, есть ли кешированные данные для жанров
+    # Проверяем, есть ли кешированные данные
     genres_data = cache.get('genres_data')
 
     if not genres_data:
-        # Получаем все жанры с предварительным выбором нужных данных
+        # Предзагрузка всех жанров и связанных медиа
         genres = Genres.objects.all()
 
-        # Получаем все фильмы, сериалы и мультфильмы с предварительной загрузкой жанров
+        # Предзагрузка данных для медиа с жанрами
         movies = Movies.objects.prefetch_related('genre')
         tv_shows = TvShows.objects.prefetch_related('genre')
         cartoons = Cartoon.objects.prefetch_related('genre')
 
-        # Получаем все фильмы, сериалы и мультфильмы, исключая дублирующиеся постеры
+        # Собираем все данные в один проход
+        genre_media_map = {genre: [] for genre in genres}
         used_posters = set()  # Храним уже использованные постеры
-        genres_data = []
 
-        for genre in genres:
-            # Получаем все медиа для жанра и исключаем уже использованные постеры
-            genre_movies = movies.filter(genre=genre).exclude(poster_path__in=used_posters)
-            genre_tv_shows = tv_shows.filter(genre=genre).exclude(poster_path__in=used_posters)
-            genre_cartoons = cartoons.filter(genre=genre).exclude(poster_path__in=used_posters)
+        # Проходимся по всем медиа и добавляем их к соответствующим жанрам
+        for media_set in [movies, tv_shows, cartoons]:
+            for item in media_set:
+                for genre in item.genre.all():
+                    if genre in genre_media_map and item.poster_path not in used_posters:
+                        if len(genre_media_map[genre]) < 3:  # Ограничиваем до 3 медиа на жанр
+                            genre_media_map[genre].append(item)
+                            used_posters.add(item.poster_path)
 
-            # Объединяем все медиа для жанра в один список
-            genre_media = list(genre_movies) + list(genre_tv_shows) + list(genre_cartoons)
+        # Преобразуем данные для использования в шаблоне
+        genres_data = [
+            {'genre': genre, 'media': media_list}
+            for genre, media_list in genre_media_map.items()
+        ]
 
-            # Ограничиваем до 3 уникальных постеров
-            limited_media = []
-            for item in genre_media:
-                if item.poster_path not in used_posters and len(limited_media) < 3:
-                    limited_media.append(item)
-                    used_posters.add(item.poster_path)
-
-            # Добавляем данные о жанре и медиа в итоговый список
-            genres_data.append({
-                'genre': genre,
-                'media': limited_media,
-            })
-
+        # Кешируем результат
         cache.set('genres_data', genres_data, timeout=2592000)
-    # Если genres_data пустое, то вернется пустая страница (можно изменить на другую страницу, если нужно)
+
     return render(request, 'cinema/genre.html', {'genres_data': genres_data})
 
 
