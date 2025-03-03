@@ -26,7 +26,12 @@ PostgreSQL
 ## Пример
 
 ![image](https://github.com/user-attachments/assets/7e6dfa5f-7ff5-4a92-b1b9-5e89e286019f)
+
 ![image](https://github.com/user-attachments/assets/116d5596-965c-4602-b5af-7621b4aeabfb)
+
+![image](https://github.com/user-attachments/assets/99370364-6d51-46aa-8620-01b8740a39cc)
+
+
 
 
 ## Планы по развитию
