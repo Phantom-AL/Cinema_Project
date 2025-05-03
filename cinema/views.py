@@ -301,7 +301,7 @@ async def get_player_data(slug, model_name, year, season, episode, translator_id
                 'English') else None,
             'russian_sub': stream.subtitles.subtitle_names.get('Русский').url if stream.subtitles.subtitle_names.get(
                 'Русский') else None
-        }
+        }   
 
         video_urls = {
             # 'best_quality': await stream.video.last_url,
