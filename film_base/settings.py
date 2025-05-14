@@ -25,9 +25,9 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-c1f)x@d!buui8i#i#%jes%-yfqcp^=sx+l=c5@g+$-$&d9_0zx'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', 'prosmotr.onrender.com']
 
  
 # Application definition
@@ -95,11 +95,12 @@ import os
 
 DATABASES = {
     'default': dj_database_url.config(
-        default=os.getenv('DATABASE_URL', 'postgres://localhost:5432/postgres'),
+        default=os.getenv('DATABASE_URL'),
         conn_max_age=600,
-        ssl_require=True
+        ssl_require=os.getenv('RENDER', '') != ''
     )
 }
+
 
 
 
