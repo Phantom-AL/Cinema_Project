@@ -11,7 +11,8 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
-from hdrezka import Search
+
+from cinema.hdrezka.api.search import Search
 
 from .forms import RegistrationForm, ReviewForm, CustomLoginForm
 from .models import Movies, Recommendations, TvShows, Cartoon, Genres, Reviews
