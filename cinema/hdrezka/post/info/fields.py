@@ -1,47 +1,44 @@
-"""high-level structures for representing title data"""
-from dataclasses import dataclass
+"""High-level structures for representing title data"""
+__all__ = ('Hyperlink', 'Rating', 'Rank', 'Release', 'AgeRating', 'Poster', 'Birthplace')
 
-__all__ = ('Rating', 'Place', 'Release', 'AgeRating', 'Duration', 'Poster')
+from typing import NamedTuple
 
 
-@dataclass(frozen=True, slots=True)
-class Rating:
+class Hyperlink(NamedTuple):
+    """Hyperlink representation"""
+    name: str = ''
+    url: str = ''
+
+    def __str__(self):
+        return self.name
+
+
+class Rating(NamedTuple):
     """Rating for service"""
-    service: str
+    service: Hyperlink
     rating: int | float
     votes: int
 
 
-@dataclass(frozen=True, slots=True)
-class Place:
-    """Place of title"""
-    name: str
-    place: int
+class Rank(NamedTuple):
+    """Rank of title"""
+    name: Hyperlink
+    rank: int
 
 
-@dataclass(frozen=True, slots=True)
-class Release:
+class Release(NamedTuple):
     """Release date"""
-    year: int
     day: str
+    year: int
 
 
-@dataclass(frozen=True, slots=True)
-class AgeRating:
+class AgeRating(NamedTuple):
     """Age restricts"""
     age: int
     description: str = ''
 
 
-@dataclass(frozen=True, slots=True)
-class Duration:
-    """Duration of title"""
-    number: int
-    units: str
-
-
-@dataclass(frozen=True, slots=True)
-class Poster:
+class Poster(NamedTuple):
     """Poster of title"""
     full: str = ''
     preview: str = ''
@@ -49,3 +46,11 @@ class Poster:
     def __bool__(self):
         """Is any poster"""
         return not not (self.full or self.preview)
+
+
+class Birthplace(NamedTuple):
+    """Birthplace information"""
+    country: str
+    city: str | None = None
+    subcountry: str | None = None
+    state: str | None = None

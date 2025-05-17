@@ -10,9 +10,9 @@
         <img class="background" src="{{ media.backdrop_path }}" alt="{{ media.title }}">
         <div class="background-overlay"></div> <!-- Затемнение фона -->
     </div>
-    
-    
-    
+
+
+
     <div class="container">
         <div class="content">
             <h1>{{ media.title }}</h1>
@@ -86,7 +86,7 @@
             <!-- Остальные переводы -->
             {% for name, id in player_data.translators %}
                 {% if id != 238 %}
-               
+
                     <option value="{{ id }}"
                             {% if id|stringformat:"s" == current_translator_id|stringformat:"s" %}selected{% endif %}>
                         {{ name }}
@@ -99,7 +99,7 @@
 
 
 
-   
+
 
 
 
@@ -118,8 +118,16 @@
             <track src="{{ player_data.subtitles_url.english_sub }}" kind="subtitles" srclang="en" label="English">
 
 
-            <source src="{{ player_data.video_urls.url_360p }}" type="application/vnd.apple.mpegurl" data-res="360p">
-            <source src="{{ player_data.video_urls.url_1080p }}" type="application/vnd.apple.mpegurl" data-res="1080p">
+            {% for url in player_data.video_urls.url_360p %}
+                <source src="{{ url }}" type="application/vnd.apple.mpegurl" data-res="360p">
+            {% endfor %}
+
+            {% for url in player_data.video_urls.url_1080p %}
+                <source src="{{ url }}" type="application/vnd.apple.mpegurl" data-res="1080p">
+            {% endfor %}
+
+
+            {% comment %}<source src="{{ player_data.video_urls.url_1080p }}" type="application/vnd.apple.mpegurl" data-res="1080p">{% endcomment %}
             {% comment %}<source src="{{ player_data.video_urls.url_720p }}" type="application/vnd.apple.mpegurl" data-res="720p">
 
                 <source src="{{ player_data.video_urls.url_480p }}" type="application/vnd.apple.mpegurl" data-res="480p">

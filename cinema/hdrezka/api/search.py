@@ -1,11 +1,10 @@
 """Implementation of search on HDRezka pages (see ..post.page.Page class)"""
-from typing_extensions import override
+__all__ = ('Search',)
 
+from typing import override
 
 from ..post.page import *
 from ..url import Request
-
-__all__ = ('Search',)
 
 
 class Search(Page):
@@ -19,10 +18,12 @@ class Search(Page):
 
     @staticmethod
     def search_url(query: str):
+        """Returns current query search url"""
         return Request.host_join(f'search/?do=search&subaction=search&q={query}')
 
     @property
     def query(self) -> str:
+        """Current search query"""
         return self._query
 
     @query.setter
@@ -37,4 +38,4 @@ class Search(Page):
         return f'{url}&page={{0}}'
 
     def __repr__(self):
-        return f"{self.__class__.__qualname__}({f'{self.query!r}' if self.query else ''})"
+        return f"{self.__class__.__qualname__}({repr(self.query) if self.query else ''})"

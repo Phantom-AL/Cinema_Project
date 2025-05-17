@@ -11,8 +11,7 @@ from django.http import JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render, get_object_or_404
 from django.views.generic import ListView
-
-from cinema.hdrezka.api.search import Search
+from cinema.hdrezka import Search
 
 from .forms import RegistrationForm, ReviewForm, CustomLoginForm
 from .models import Movies, Recommendations, TvShows, Cartoon, Genres, Reviews
@@ -237,23 +236,27 @@ class SearchResultsAllView(BaseSearchResultView):
 async def get_player_data(slug, model_name, year, season, episode, translator_id=None):
     # Поиск по слагу
     try:
+        print('Перед поиском по слагу')
         search_results = await Search(slug).get_page(1)
         print(search_results)
-        if not search_results:
-            return None
+        print('dkkkk##########3')
 
         first_result = None
         # Поиск по году
         for result in search_results:
+            print(result.info)
+            print(result.info.year)
+            start_year = result.info.year
             # Разделяем строку info по запятой и пробелу
-            year_range = result.info.split(', ')[0]
-
-            # Если год — это диапазон, разделим его по '-'
-            if '-' in year_range:
-                start_year = year_range.split('-')[0]
-            else:
-                # Если это просто год, используем его как start_year
-                start_year = year_range
+            # year_range = result.info.split(', ')[0]
+            # print(1, year_range)
+            #
+            # # Если год — это диапазон, разделим его по '-'
+            # if '-' in year_range:
+            #     start_year = year_range.split('-')[0]
+            # else:
+            #     # Если это просто год, используем его как start_year
+            #     start_year = year_range
 
             # Сравниваем start_year с переданным годом
             if str(start_year) == str(year):
@@ -263,46 +266,56 @@ async def get_player_data(slug, model_name, year, season, episode, translator_id
                 break
 
         if first_result is None:
-            return None  # Возвращаем None, если не нашли год
+            return 'Год не найден !!!!!!!!'  # Возвращаем None, если не нашли год
 
         print(first_result)
 
         player = await first_result.player
+        print(player, '==========player')
 
         if not translator_id:
             translator_id = 238
 
-        # Получение потока видео
-        if model_name == 'tvshows':
+        try:
+            print(1)
             available_seasons = await player.get_episodes(translator_id)
-
-            if season and episode:
-                stream = await player.get_stream(int(season), int(episode), translator_id)
-            else:
-                stream = await player.get_stream(1, 1, translator_id)
-
+            stream = await player.get_stream(int(season), int(episode), translator_id)
             available_seasons_list = list(available_seasons.items())
 
-        elif model_name == 'recommendations':
-            available_seasons = await player.get_episodes(translator_id)
-
-            if available_seasons:
-                stream = await player.get_stream(int(season), int(episode), translator_id)
-                available_seasons_list = list(available_seasons.items())
-        else:
+        except:
             stream = await player.get_stream(translator_id)
+            print('FILLLLMMEM@MME')
             available_seasons_list = None
 
-        print(stream.video)
+        # Получение потока видео
+        # if model_name == 'tvshows':
+        #     available_seasons = await player.get_episodes(translator_id)
+        #
+        #     if season and episode:
+        #         stream = await player.get_stream(int(season), int(episode), translator_id)
+        #     else:
+        #         stream = await player.get_stream(1, 1, translator_id)
+        #
+        #     available_seasons_list = list(available_seasons.items())
+        #
+        # elif model_name == 'recommendations':
+        #     print('############')
+        #
+        #
+        # else:
+        #     stream = await player.get_stream(translator_id)
+        #     available_seasons_list = None
 
-        print(stream.subtitles.subtitle_names)
+        # print(stream.video)
+        #
+        # print(stream.subtitles.subtitle_names)
 
         subtitles_urls = {
             'english_sub': stream.subtitles.subtitle_names.get('English').url if stream.subtitles.subtitle_names.get(
                 'English') else None,
             'russian_sub': stream.subtitles.subtitle_names.get('Русский').url if stream.subtitles.subtitle_names.get(
                 'Русский') else None
-        }   
+        }
 
         video_urls = {
             # 'best_quality': await stream.video.last_url,
@@ -312,7 +325,7 @@ async def get_player_data(slug, model_name, year, season, episode, translator_id
             'url_1080p': stream.video[1080].raw_data.get('1080p'),
             # 'url_1080p_Ultra': stream.video[1080]['ultra'].raw_data.get('1080p Ultra'),
         }
-
+        print('LOCKal ', video_urls)
         return {
             'video_urls': video_urls,
             'subtitles_url': subtitles_urls,
@@ -328,6 +341,11 @@ async def get_player_data(slug, model_name, year, season, episode, translator_id
 
     except Exception as e:
         return JsonResponse({'error': f'Произошла ошибка: {str(e)}'}, status=500)
+
+    except:
+        print('Ошибка поиска по слагу ')
+
+
 
 
 def get_or_create_event_loop():
@@ -359,7 +377,9 @@ def detail(request, model_name, slug, year, season=None, episode=None):
 
     # Асинхронный вызов функции
     player_data = loop.run_until_complete(get_player_data(slug, model_name, year, season, episode, translator_id))
-
+    # print(player_data)
+    # print(player_data['video_urls'].get('url_360p'))
+    # print(player_data['video_urls'].get('url_1080p'))
     # Обработка формы отзыва
     if request.method == 'POST':
         if request.user.is_authenticated:  # Проверяем, что пользователь авторизован

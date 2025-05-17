@@ -1,26 +1,30 @@
-"""high-level representation of video"""
+"""High-level representation of video"""
+__all__ = ('VideoURL', 'VideoURLs')
+
 from typing import Iterable, SupportsInt
 
 from .quality import Quality
-from .._regexes import findall_qualities
 from ...._deobfuscation import clear_trash
 from ....api.http import get_response
 
-__all__ = ('VideoURL', 'VideoURLs')
 
-
-class VideoURL(str):
-    """str type add-on to represent video"""
+class _AwaitableStr(str):
     __slots__ = ()
 
     def __await__(self):
         """Follow redirects in url and return correct video url"""
-        return self.__class__((yield from get_response("GET", self, follow_redirects=True).__await__()).url)
+        return self.__class__((yield from get_response('GET', self, follow_redirects=False).__await__()
+                               ).headers.get('Location', str(self)))
+
+
+class VideoURL(_AwaitableStr):
+    """str type add-on to represent video"""
+    __slots__ = ()
 
     @property
     def mp4(self) -> str:
-        """url without ':hls:manifest.m3u8'"""
-        return str(self.removesuffix('8').removesuffix(':hls:manifest.m3u'))
+        """URL without ':hls:manifest.m3u8'"""
+        return _AwaitableStr(self.removesuffix(':hls:manifest.m3u8'))
 
 
 class VideoURLs:
@@ -35,17 +39,19 @@ class VideoURLs:
             if not str and not dict raises TypeError
         """
         if isinstance(data, str):
-            self.raw_data: dict[Quality, VideoURL] = {
-                Quality(q): VideoURL(u) for q, u in findall_qualities(clear_trash(data))}
+            self.raw_data: dict[Quality, tuple[VideoURL, ...]] = {
+                Quality(q): (*(VideoURL(i) for i in u.split(' or ') if i.endswith('.m3u8')),)
+                for q, u in (i.removeprefix('[').split(']', 1) for i in clear_trash(data).split(','))
+            }
         elif isinstance(data, dict):
             self.raw_data = data
         else:
-            raise TypeError(f'got {data!r} (type {type(data)}) but expected type {str | dict}')
+            raise TypeError(f'got {data!r} (type {type(data)}) but expected type str | dict')
         self.qualities: tuple[Quality, ...] = *sorted(self.raw_data),
         self.min = int(self.qualities[0]) if self.qualities else 1
 
     @property
-    def last_url(self):
+    def last_url(self) -> tuple[VideoURL, ...]:
         """Best quality url"""
         return self[-1].raw_data.popitem()[1]
 
@@ -80,4 +86,4 @@ class VideoURLs:
         return self.__class__(result)
 
     def __repr__(self):
-        return f"{self.__class__.__qualname__}({self.raw_data})"
+        return f'{self.__class__.__qualname__}({self.raw_data!r})'
