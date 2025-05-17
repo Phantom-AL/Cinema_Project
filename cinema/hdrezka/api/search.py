@@ -1,7 +1,7 @@
 """Implementation of search on HDRezka pages (see ..post.page.Page class)"""
 __all__ = ('Search',)
 
-from typing import override
+#from typing import override
 
 from ..post.page import *
 from ..url import Request
@@ -33,7 +33,7 @@ class Search(Page):
         self.page = self.search_url(self.query)
 
     @staticmethod
-    @override
+    #@override
     def _concat_paginator(url: str) -> str:
         return f'{url}&page={{0}}'
 
