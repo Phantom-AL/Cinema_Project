@@ -346,8 +346,6 @@ async def get_player_data(slug, model_name, year, season, episode, translator_id
         print('Ошибка поиска по слагу ')
 
 
-
-
 def get_or_create_event_loop():
     try:
         return asyncio.get_event_loop()
