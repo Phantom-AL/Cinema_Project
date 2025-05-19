@@ -2,61 +2,60 @@
 
 /* Настройка кнопок и лого */
 
-.header-logo, .footer-logo {
-    width: 100px; /* Измени значение на подходящее */
-    height: auto; /* Автоматическая высота для сохранения пропорций */
-    transition: transform 0.3s ease;
+/* Настройка кнопок и лого */
 
+.header-logo, .footer-logo {
+    width: clamp(45px, 8vw, 180px);
+    height: auto;
+    transition: transform 0.3s ease;
 }
 
 .header-logo:hover, .footer-logo:hover {
     transform: scale(1.05);
 }
 
-
 .fa-x-twitter, .fa-instagram, .fa-telegram {
-    font-size: 36px;
+    font-size: clamp(28px, 3vw, 55px);
 }
 
-
 .fa-telegram {
-    color: #0088cc; /* Голубой цвет для Telegram */
+    color: #0088cc;
 }
 
 .fa-instagram {
-    color: #e1306c; /* Розово-фиолетовый цвет для Instagram */
+    color: #e1306c;
 }
 
 .fa-x-twitter {
-    color: #e1e1e1; /* Синий цвет для X (Twitter) */
+    color: #e1e1e1;
 }
 
-/* Дополнительно можно добавить hover-эффект */
 .fa-brands:hover {
-    opacity: 0.8; /* Эффект затемнения при наведении */
+    opacity: 0.8;
 }
 
 .footer-text {
     color: #e1e1e1;
-    font-size: 1.2rem;
+    font-size: clamp(0.8rem, 1.5vw, 1.8rem);
     margin-bottom: 0;
 }
-
 
 .login-button, .register-button {
     color: #fff;
     text-decoration: none;
     border-radius: 15px;
-    padding: 10px 20px;
+    padding: clamp(4px, 1.4vw, 12px) clamp(7px, 4vw, 22px);
     background-color: #cba815;
-    font-size: 1.1rem;
+    font-size: clamp(0.6rem, 1.1vw, 1.5rem);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
-
 }
 
 .login-button {
-    padding: 10px 30px;
+    padding: clamp(4px, 1.4vw, 12px) clamp(7px, 4vw, 22px);
 }
+
+
+
 
 .register-button {
     background-color: #3C3C3C;
@@ -64,8 +63,7 @@
 
 .login-button:hover {
     background-color: #b09313;
-    box-shadow: 0 0 15px rgba(203, 168, 21, 0.6), 0 0 10px rgba(203, 168, 21, 0.4);
-
+    box-shadow: 0 0 10px rgba(203, 168, 21, 0.6), 0 0 10px rgba(203, 168, 21, 0.4);
 }
 
 .register-button:hover {
@@ -74,51 +72,9 @@
 }
 
 
-@media (max-width: 768px) {
-    .header-logo, .footer-logo {
-        width: 80px;
-    }
-
-    .fa-x-twitter, .fa-instagram, .fa-telegram {
-        font-size: 32px;
-    }
-}
 
 
-@media (max-width: 535px) {
-    .fa-x-twitter, .fa-instagram, .fa-telegram {
-        font-size: 28px;
-    }
-}
 
-
-@media (max-width: 535px) {
-    .header-logo, .footer-logo {
-        width: 65px;
-    }
-}
-
-
-@media (max-width: 535px) {
-    .navbar-toggler-icon {
-        font-size: 1rem;
-    }
-}
-
-@media (max-width: 768px) {
-    .login-button, .register-button {
-        padding: 10px 16px;
-        width: 100%;
-        font-size: 0.9rem;
-    }
-}
-
-@media (max-width: 535px) {
-    .login-button, .register-button {
-        padding: 8px 12px; /* ещё больше уменьшим внутренние отступы */
-        font-size: 0.70rem; /* ещё немного уменьшим текст */
-    }
-}
 
 
 /* Ссылки в шапке */
@@ -130,18 +86,14 @@
     width: 100%;
 }
 
-
-
 .nav-link {
     font-weight: 500;
     color: #d1d1d1;
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 1.5vw, 1.7rem);
     position: relative;
     text-decoration: none;
     transition: color 0.3s ease;
 }
-
-
 
 .nav-link:hover {
     color: #cba815; /* цвет текста при наведении */
@@ -152,11 +104,10 @@
         content: '';
         position: absolute;
         width: 0;
-        height: 2px;
+        height: clamp(1.5px, 0.2vw, 2px);
         background-color: #cba815; /* цвет подчеркивания */
         left: 50%;
-
-        bottom: -3px;
+        bottom: clamp(-3px, -0.3vw, -5px);
         transition: width 0.3s ease, left 0.3s ease;
     }
 
@@ -171,8 +122,24 @@
         width: 80%;
         left: 10%;
     }
-
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 .navbar-toggler:focus, .btn-close:focus {
@@ -206,121 +173,30 @@
 .breaking-bad_section img {
     object-fit: cover;
     width: 100%;
-    
+
 
 }
+
+
+
+
+
 
 /* Работа с текстом */
 
-
-.my_swiper h2 {
-    font-size: 1.84rem;
-}
-
-
-
+.my_swiper h2,
 .reviews h2 {
     text-align: center;
-    font-size: 1.84rem;
+    font-size: clamp(0.8rem, 2vw, 1.9rem);
     color: #e1e1e1;
 }
-
 
 .last-reviews {
     text-align: center;
-    font-size: 1.6rem;
+    font-size: clamp(0.8rem, 1.6vw, 1.8rem);
     color: #e1e1e1;
 }
 
-
-/* Адаптация текста */
-
-
-@media (max-width: 900px) {
-    .image-text {
-        left: 55%; /* Смещаем текст влево */
-        top: 10%; /* Опускаем текст ниже */
-    }
-
-    .image-text h1, .my_swiper h2 {
-        font-size: 1.3rem;
-        margin-bottom: 10px;
-    }
-
-    .reviews h2 {
-        font-size: 1.3rem;
-    }
-
-    .reviews .last-reviews {
-        font-size: 1.3rem;
-    }
-
-    .image-text p, .footer-text {
-        font-size: 1rem;
-        margin-bottom: 8px;
-    }
-}
-
-@media (max-width: 656px) {
-    .image-text {
-        left: 52%;
-        top: 5%; /* Опускаем текст ниже */
-    }
-
-    .image-text h1, .my_swiper h2 {
-        font-size: 1.1rem;
-        margin-bottom: 6px;
-    }
-
-    .reviews h2 {
-        font-size: 1.1rem;
-    }
-
-    .reviews .last-reviews {
-        font-size: 1.1rem;
-    }
-
-    .image-text p {
-        font-size: 0.9rem;
-        margin-bottom: 4px;
-    }
-
-    .footer-text {
-        font-size: 0.9rem;
-    }
-
-}
-
-@media (max-width: 535px) {
-    .image-text {
-        max-width: 90%;
-        left: 52%;
-        top: 3%;
-    }
-
-    .image-text h1, .my_swiper h2 {
-        font-size: 0.8rem;
-        margin-bottom: 4px;
-    }
-
-    .reviews h2 {
-        font-size: 0.8rem;
-    }
-
-    .reviews .last-reviews {
-        font-size: 0.8rem;
-    }
-
-    .image-text p {
-        font-size: 0.6rem;
-        margin: 2px;
-    }
-
-    .footer-text {
-        font-size: 0.7rem;
-    }
-
-}
 
 
 /*Swiper customize*/
@@ -409,7 +285,17 @@
 }
 
 
+.swiper {
+    padding: 0 5px; !important;
+}
 
+.my-swiper-slide img {
+        border-radius: 15px;
+    }
+
+.my-swiper-slide {
+    flex: 0 0 auto; /* Ширина слайда рассчитывается Swiper */
+}
 
 /* reviews секция */
 
@@ -439,6 +325,8 @@
     }
 
 
+
+
 /* Cards */
 
 
@@ -463,24 +351,7 @@
     color: #0aa2c0;
 }
 
-.swiper {
-    padding: 0 5px; !important;
-}
 
-
-
-
-
-
-
-
-.my-swiper-slide img {
-        border-radius: 15px;
-    }
-
-.my-swiper-slide {
-    flex: 0 0 auto; /* Ширина слайда рассчитывается Swiper */
-}
 
 @media (max-width: 768px) {
     .card-info,
@@ -739,6 +610,7 @@
 }
 
 
+
 }
 
 @media (max-width: 538px) {
@@ -928,128 +800,6 @@ button.btn-close {
 .modal-footer .btn:hover {
     background-color: #555555;
 }
-
-
-/* width 1150 */
-
-@media (min-width: 1150px) {
-    .header-logo, .footer-logo {
-        width: 120px; /* Измени значение на подходящее */
-        height: auto; /* Автоматическая высота для сохранения пропорций */
-    }
-
-    .fa-x-twitter, .fa-instagram, .fa-telegram {
-        font-size: 44px;
-    }
-
-    .footer-text {
-        font-size: 1.4rem;
-    }
-
-    .login-button, .register-button {
-        font-size: 1.3rem;
-
-    }
-
-    .nav-link {
-        font-size: 1.4rem;
-    }
-
-    .image-text h1, .my_swiper h2, .reviews h2 {
-        font-size: 2rem;
-    }
-
-    .image-text p {
-        font-size: 1.5rem;
-    }
-
-    .last-reviews {
-        font-size: 1.8rem;
-    }
-
-}
-
-
-/* width 1400px */
-
-@media (min-width: 1350px) {
-    .header-logo, .footer-logo {
-        width: 150px; /* Измени значение на подходящее */
-        height: auto; /* Автоматическая высота для сохранения пропорций */
-    }
-
-    .fa-x-twitter, .fa-instagram, .fa-telegram {
-        font-size: 53px;
-    }
-
-    .footer-text {
-        font-size: 1.6rem;
-    }
-
-    .login-button, .register-button {
-        font-size: 1.5rem;
-        padding: 14px 24px;
-
-    }
-
-    .nav-link {
-        font-size: 1.7rem;
-    }
-
-    .image-text h1, .my_swiper h2, .reviews h2 {
-        font-size: 2.3rem;
-    }
-
-    .image-text p {
-        font-size: 1.8rem;
-    }
-
-    .last-reviews {
-        font-size: 1.9rem;
-    }
-
-}
-
-
-/* width 1700px */
-
-@media (min-width: 1650px) {
-    .header-logo, .footer-logo {
-        width: 180px; /* Измени значение на подходящее */
-        height: auto; /* Автоматическая высота для сохранения пропорций */
-    }
-
-    .fa-x-twitter, .fa-instagram, .fa-telegram {
-        font-size: 55px;
-    }
-
-    .footer-text {
-        font-size: 1.8rem;
-    }
-
-    .login-button, .register-button {
-        font-size: 1.9rem;
-
-    }
-
-    .nav-link {
-        font-size: 2rem;
-    }
-
-    .image-text h1, .my_swiper h2, .reviews h2 {
-        font-size: 2.7rem;
-    }
-
-    .image-text p {
-        font-size: 2.1rem;
-    }
-
-    .last-reviews {
-        font-size: 2.1rem;
-    }
-
-}
-
 
 
 .container-genres {

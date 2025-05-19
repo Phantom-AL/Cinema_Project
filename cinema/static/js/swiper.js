@@ -52,6 +52,14 @@ new Swiper('.cinema-slider', {
 
 
         },
+        1500: {
+            slidesPerView: 7.5,
+            spaceBetween: 16,
+            slidesPerGroup: 7,
+
+
+
+        },
 
 
     }
