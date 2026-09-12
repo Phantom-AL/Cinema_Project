@@ -1,0 +1,10 @@
+.idea
+.gitignore
+cinema_cache
+.env
+LICENSE
+README.md
+venv
+__pycache__
+*.pyc
+.git

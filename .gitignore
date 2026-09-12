@@ -6,6 +6,9 @@ __pycache__
 venv/
 db.sqlite3
 media
+.idea/
+cinema_cache/
+staticfiles/
 
 # Backup files # 
 *.bak 
@@ -128,4 +131,7 @@ Control.last-run
 Control.ca-list 
 Control.ca-bundle 
 Control.system-ca-bundle 
-GitHub.sublime-settings 
+GitHub.sublime-settings
+
+cinema_data.json
+users_data.json

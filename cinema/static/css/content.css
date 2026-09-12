@@ -46,7 +46,7 @@ body {
 .movies-container .search_btn {
   background-color: #cba815;
   color: #fff;
-  padding: clamp(8px, 1vw, 12px) clamp(16px, 2vw, 24px);
+  padding: clamp(8px, 1vw, 10px) clamp(16px, 2vw, 20px);
   border-radius: clamp(8px, 1vw, 10px);
   border: 0;
   transition: background-color 0.3s ease, box-shadow 0.3s ease;

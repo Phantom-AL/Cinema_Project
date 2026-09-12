@@ -78,7 +78,6 @@ def get_imdb_rating(title, year):
 
     return None
 
-
 def fetch_and_save_media(media_model, page_start=1, page_end=3, with_genres=False, is_tv_show=False):
     count = 0
 

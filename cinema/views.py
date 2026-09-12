@@ -320,6 +320,7 @@ async def get_player_data(slug, model_name, year, season, episode, translator_id
         video_urls = {
             # 'best_quality': await stream.video.last_url,
             'url_360p': stream.video[360].raw_data.get('360p'),
+            'url_720p': stream.video[720].raw_data.get('720p'),
             # 'url_480p': stream.video[480].raw_data.get('480p'),
             # 'url_720p': stream.video[720].raw_data.get('720p'),
             'url_1080p': stream.video[1080].raw_data.get('1080p'),
