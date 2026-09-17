@@ -23,10 +23,12 @@ def delete_media_cache(sender, **kwargs):
         total_pages = ceil(total_items / items_per_page)  # Рассчитываем количество страниц
 
         # Удаление кеша для страниц с общим префиксом
-        for page_number in range(1, total_pages+1):
+        for page_number in range(1, total_pages+2):  # +2 to be safe
             cache_key = f"{sender.__name__}_page_{page_number}"
             cache.delete(cache_key)
-        print(f"Deleted cache for {sender.__name__} ({total_pages} pages)")
+
+        cache.delete(f"{sender.__name__}_total_results")
+
 
 
 @receiver([post_save, post_delete], sender=Recommendations)

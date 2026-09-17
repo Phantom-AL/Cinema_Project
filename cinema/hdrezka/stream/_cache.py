@@ -1,22 +1,20 @@
-"""Primitive cache storage"""
+"""Redis based cache storage"""
+from django.core.cache import cache
+
 __all__ = ('CACHE',)
 
 
 class _CacheStorage:
-    __slots__ = ('max_size', '__storage', 'get')
+    def __init__(self, timeout: int = 3600):
+        self.timeout = timeout
 
-    def __init__(self, max_size: int = 10):
-        self.max_size = max_size
-        self.__storage: dict = {}
-        self.get = self.__storage.get
+    def get(self, key):
+        """Get value from cache"""
+        return cache.get(f"hdrezka:{key}")
 
     def set(self, key, value):
         """Store some cache"""
-        self.__storage[key] = value
-        for k in (*self.__storage.keys(),):
-            if len(self.__storage) <= self.max_size:
-                break
-            del self.__storage[k]
+        cache.set(f"hdrezka:{key}", value, timeout=self.timeout)
 
 
 CACHE = _CacheStorage()
